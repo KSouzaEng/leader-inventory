@@ -31,7 +31,7 @@ Para iniciar o desenvolvimento, é necessário clonar o projeto do GitHub num di
 Caso esteja usando o laragon entre em cd "C:\laragon\www "  e abra o cmd ou terminal nesta pasta e cole o comando a seguir  
 git clone https://github.com/KSouzaEng/leader-inventory.git
 
-Caso esteja usando o laragon entre em cd "C:\xampp\htdocs"  e abra o cmd ou terminal nesta pasta e cole o comando a seguir
+Caso esteja usando o xampp entre em cd "C:\xampp\htdocs"  e abra o cmd ou terminal nesta pasta e cole o comando a seguir
 git clone https://github.com/KSouzaEng/leader-inventory.git
 
 Ou cole em sua pasta de preferência
