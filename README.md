@@ -1,19 +1,17 @@
-# Cutter
+# Leader Inventory
 
 
-O **Cutter** é uma aplicação desenvolvida em **PHP** e **JavaScript** que tem como objetivo reduzir o tamanho de urls muito grandes.
+O **Leader Inventory** é uma aplicação desenvolvida em **PHP**  que tem como objetivo fazer o gerenciamento de um inventário.
 
 ## Linguagens utilizadas
 
-- PHP 7.4.19
+- PHP 8.1.12
 - HTML 5
 - CSS 3
 - MySQL
-- JavaScript
 
 ## Frameworks
 - Laravel 8
-- Vuejs 3
 
 ## Ferramentas para executar o projeto
 
@@ -68,35 +66,10 @@ Para gerar as tabelas do banco de dados é necessário executar o comando a segu
 ```shell
 php artisan migrate
 ```
-Permite Intalar e atualizar as dependências da palicação
-```shell
-npm install
-```
-Permite usar variáveis de ambiente
-```shell
-npm install cross-env
-```
-Permite usar variáveis de ambiente
-```shell
-npm install 
-```
-Para os alertas da aplicação
-```shell
-npm install sweetalert2
-```
-Para compilar os arquivos JavaScript embutidos no framework Laravel
-```shell
-npm run dev
-```
 
 Para compilar os arquivos JavaScript embutidos no framework Laravel
 ```shell
 php artisan serve
 ```
 
-## Melhorias
-
-- Como melhoria do projeto seria interessante implementar os testes unitários, pois é necessário que a aplicação fique o mais funcional possível e com uma quantidade pequena de erros.
--  Melhorar a interface que não está funcional, pois me preocupei muito com a implementação da funcionalidade principal.
--  Utualização de tabela após salvar os dados
 
