@@ -15,9 +15,7 @@ O **Leader Inventory** é uma aplicação desenvolvida em **PHP**  que tem como 
 
 ## Controle de Versão
 para controlar as versões de código do  projeto que serão atualizadas constantemente durante o desenvolvimento, usaremos o git
-```
-https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-```
+- [Como instalar o git em diferentes SOS](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ## Ferramentas para executar o projeto
 
