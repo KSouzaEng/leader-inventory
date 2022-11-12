@@ -1,66 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Cutter
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+O **Cutter** é uma aplicação desenvolvida em **PHP** e **JavaScript** que tem como objetivo reduzir o tamanho de urls muito grandes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Linguagens utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 7.4.19
+- HTML 5
+- CSS 3
+- MySQL
+- JavaScript
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Frameworks
+- Laravel 8
+- Vuejs 3
 
-## Learning Laravel
+## Ferramentas para executar o projeto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para executar o projeto, será necessário instalar os seguintes programas:
+- [Laragon: Usado para iniciar o servidor web e fazer o gerenciamento do banco de dados (PHP embutido, MySQL  e Composer)](https://laragon.org/download/index.html)
+- [Visual Studio Code: Para desenvolvimento do projeto (ou editor de sua preferência)](https://code.visualstudio.com/download)
+Ou a ferramenta de sua prefrência
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Instalação do projeto
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Para iniciar o desenvolvimento, é necessário clonar o projeto do GitHub num diretório de sua preferência:
+```shell
+Caso esteja usando o laragon entre em cd "C:\laragon\www "  e abra o cmd ou terminal nesta pasta e cole o comando a seguir  
+git clone https://github.com/KSouzaEng/ShortenerUrl.git
 
-## Laravel Sponsors
+Caso esteja usando o laragon entre em cd "C:\xampp\htdocs"  e abra o cmd ou terminal nesta pasta e cole o comando a seguir
+git clone https://github.com/KSouzaEng/ShortenerUrl.git
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Ou cole em sua pasta de preferência
+```
 
-### Premium Partners
+## Configurando a aplicação 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Antes de rodar a aplicação é necessário executar os seguintes commandos.
 
-## Contributing
+Instala dependências do Laravel
+```shell
+composer install
+```
+Copia o arquivo para fazer a conexão com a base de dados
+```shell
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Gera uma chave aleatório com 32 caracteres para manter os dados da aplicação protegidos
+```shell
+php artisan key:generate
+```
+Abra o arquivo .env e inclua nele o nome de sua base de dados. Procure pela linha DB_DATABASE
+```shell
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nodedobanco
+DB_USERNAME=root
+DB_PASSWORD=
+```
+- OBS : Caso não estiver usando as configurações padrões do Mysql é necesário informar qual gerenciador está usando, o host, a porta, o usuário e a senha
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Para gerar as tabelas do banco de dados é necessário executar o comando a seguir
+```shell
+php artisan migrate
+```
+Permite Intalar e atualizar as dependências da palicação
+```shell
+npm install
+```
+Permite usar variáveis de ambiente
+```shell
+npm install cross-env
+```
+Permite usar variáveis de ambiente
+```shell
+npm install 
+```
+Para os alertas da aplicação
+```shell
+npm install sweetalert2
+```
+Para compilar os arquivos JavaScript embutidos no framework Laravel
+```shell
+npm run dev
+```
 
-## Security Vulnerabilities
+Para compilar os arquivos JavaScript embutidos no framework Laravel
+```shell
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Melhorias
 
-## License
+- Como melhoria do projeto seria interessante implementar os testes unitários, pois é necessário que a aplicação fique o mais funcional possível e com uma quantidade pequena de erros.
+-  Melhorar a interface que não está funcional, pois me preocupei muito com a implementação da funcionalidade principal.
+-  Utualização de tabela após salvar os dados
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
