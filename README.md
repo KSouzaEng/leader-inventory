@@ -13,6 +13,12 @@ O **Leader Inventory** é uma aplicação desenvolvida em **PHP**  que tem como 
 ## Frameworks
 - Laravel 8
 
+## Controle de Versão
+para controlar as versões de código do  projeto que serão atualizadas constantemente durante o desenvolvimento, usaremos o git
+```
+https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+```
+
 ## Ferramentas para executar o projeto
 
 Para executar o projeto, será necessário instalar os seguintes programas:
