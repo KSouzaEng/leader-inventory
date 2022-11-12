@@ -76,4 +76,48 @@ Para compilar os arquivos JavaScript embutidos no framework Laravel
 php artisan serve
 ```
 
+Lista de comandos básicos laravel
 
+**Banco de dados:**
+
+[Documentação comandos base de dados](https://laravel.com/docs/9.x/migrations#main-content)
+
+
+```
+php artisan migrate - migra as tabelas pra base de dados
+```
+```
+php artisan migrate:fresh - remove todas as tabelas do banco e logo após faz a migração
+```
+```
+php artisan migrate --seed  - roda as migrações e os arquivos de seed
+```
+```
+php artisan migrate:refresh   - Este comando recria efetivamente todo o seu banco de dados.
+```
+**Comandos pra criar arquivos**
+
+```
+php artisan make:controller TesteController  - cria um controller dentro da pasta controllers
+
+https://laravel.com/docs/9.x/controllers#main-content - controllers documentação
+```
+
+```
+php artisan make:model Teste   - cria um modelo dentro da pasta models
+
+https://laravel.com/docs/9.x/eloquent - models doc
+```
+
+```
+php artisan make:migration create_name_table   - cria uma migration dentro de database/migrations
+
+https://laravel.com/docs/9.x/migrations#main-content - migrations doc
+```
+
+
+```
+php artisan make:seeder UserSeeder - cria um arquivo de seed dentro de database/seedrs
+
+https://laravel.com/docs/9.x/seeding#main-content
+```
