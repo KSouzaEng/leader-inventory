@@ -121,3 +121,6 @@ php artisan make:seeder UserSeeder - cria um arquivo de seed dentro de database/
 
 https://laravel.com/docs/9.x/seeding#main-content
 ```
+Views
+
+[Documentação das Views](https://laravel.com/docs/9.x/views#main-content)
