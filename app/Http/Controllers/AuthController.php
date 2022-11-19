@@ -24,13 +24,14 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-        $get =  DB::table('users')->get();
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            $username = Auth::user()->name;
+     
  
-            return redirect()->intended('dashboard');
+            return view('dashboard',compact('username'));
         }
  
         return back()->withErrors([

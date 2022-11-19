@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +24,5 @@ Route::post('custom-login', [AuthController::class, 'login'])->name('signin');
 Route::get('registration', [AuthController::class, 'register'])->name('register-user');
 Route::post('custom-registration', [AuthController::class, 'registerUser'])->name('register'); 
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
+
+Route::get('create-order',[OrderController::class, 'index'] )->name('create-order');
