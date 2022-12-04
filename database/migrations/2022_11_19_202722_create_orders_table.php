@@ -18,8 +18,10 @@ return new class extends Migration
             $table->unsignedInteger('product_id');
 
             $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('order_code');
             $table->integer('quantity_product_order');
             $table->double('total_order');
+            $table->string('status')->default('OPEN');
             $table->softDeletes();
             $table->timestamps();
         });

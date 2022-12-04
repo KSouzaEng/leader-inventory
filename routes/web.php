@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\InventoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,4 +26,8 @@ Route::get('registration', [AuthController::class, 'register'])->name('register-
 Route::post('custom-registration', [AuthController::class, 'registerUser'])->name('register'); 
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
 
-Route::get('create-order',[OrderController::class, 'index'] )->name('create-order');
+Route::get('form-order',[OrderController::class, 'index'] )->name('form-order');
+Route::get('list-order',[OrderController::class, 'show'] )->name('list-order');
+Route::post('save-order',[OrderController::class, 'create'])->name('save');
+
+Route::get('list-inventory',[InventoryController::class,'index'])->name('list-inventory');

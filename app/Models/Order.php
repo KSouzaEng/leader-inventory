@@ -14,13 +14,16 @@ class Order extends Model
 
     protected $fillable = [
         'product_id',
+        'order_code',
         'quantity_product_order',
         'total_order',
+        'status',
+
     ];
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class,'id','product_id');
     }
 
 }
