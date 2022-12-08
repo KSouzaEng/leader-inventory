@@ -26,8 +26,11 @@ Route::get('registration', [AuthController::class, 'register'])->name('register-
 Route::post('custom-registration', [AuthController::class, 'registerUser'])->name('register'); 
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
 
-Route::get('form-order',[OrderController::class, 'index'] )->name('form-order');
-Route::get('list-order',[OrderController::class, 'show'] )->name('list-order');
+Route::get('list-order',[OrderController::class, 'index'] )->name('list-order');
+Route::get('form-order',[OrderController::class, 'formOrder'] )->name('form-order');
 Route::post('save-order',[OrderController::class, 'create'])->name('save');
+Route::get('order/{id}',[OrderController::class, 'show'] )->name('order');
+Route::get('order/update/status/{id}/{status}',[OrderController::class, 'updateStatus'] )->name('update-status');
+Route::get('delete/{id}',[OrderController::class, 'destroy'] )->name('destroy');
 
 Route::get('list-inventory',[InventoryController::class,'index'])->name('list-inventory');
