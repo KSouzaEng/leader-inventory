@@ -1,27 +1,32 @@
-<nav class="navbar navbar-light navbar-expand-lg mb-5" style="background-color: #e3f2fd;">
-    <div class="container">
-        <a class="navbar-brand mr-auto" href="#">Lead Inventory</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('index') }}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register-user') }}">Register</a>
-                </li>
-                @else
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('signout') }}">Logout</a>
-                </li>
-                @endguest
-            </ul>
-        </div>
-    </div>
-</nav><div>
-    <!-- Let all your things have their places; let each part of your business have its time. - Benjamin Franklin -->
+<header>
+  <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+  ></script>
+<div class="container">
+  <div class=" clearfix mt-5 ">
+   <div class=" float-start ">
+    <a href="javascript:history.back()" class="link-nav">Go Back</a>
+   </div>
+   <div class=" float-end">
+    <ul class="nav ">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled link-dark link-nav" href="#" >{{$username}}</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link link-dark link-nav" href="{{ route('signout') }}">Logout</a>
+      </li>
+
+    </ul>
+   </div>
+  </div>
 </div>
+</header>

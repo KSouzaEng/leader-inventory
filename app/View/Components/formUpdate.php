@@ -4,17 +4,12 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class navbar extends Component
+class formUpdate extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public $username;
-    public function __construct($username)
+    public $id;
+    public function __construct($id)
     {
-        $this->username = $username;
+        $this->id = $id;
     }
 
     /**
@@ -24,6 +19,6 @@ class navbar extends Component
      */
     public function render()
     {
-        return view('components.navbar');
+        return view('components.form-update');
     }
 }
