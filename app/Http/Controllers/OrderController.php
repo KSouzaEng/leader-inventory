@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
 
       public function index(){
-        $orders = Order::orderBy('id','desc')->with('products')->get();
+        $orders = Order::orderBy('id','asc')->with('products')->get();
         // $username = Auth::user()->name;
 
         return view('order.list_orders',compact('orders'));
@@ -48,7 +48,7 @@ class OrderController extends Controller
         $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]); 
         return Redirect('/list-order');
       }else {
-        return redirect('/form-order')->with('error','Erro');
+        return redirect('/list-order')->with('error','Erro');
       }
 
     }
@@ -57,14 +57,49 @@ class OrderController extends Controller
 
   
       $order = Order::where('id',$id)->with('products')->get();
-      dd($order);
+      $products = Product::get();
+      return view('order.edit',compact('order','products'));
 
+    }
+    public function update(Request $request,int $id){
+      $order = Order::where('id',$id)->with('products')->get();
+      dd($request->quantity_product_order );
+
+      $total = $order[0]->products[0]->price_per_unit * $request->quantity_product_order;
+
+      if ($order[0]->products[0]->quantity_in_stock < $request->quantity_product_order || $order[0]->products[0]->quantity_in_stock  == 0 ) {
+        return redirect('order.edit')->with('error','');
+      }
+  
+
+      $order = Order::where('id',$id)->update([
+        'product_id' => $request->product_id,
+        'quantity_product_order' => $request->quantity_product_order,
+        'total_order' => $total,
+        'status' => $request->status,
+      ]);
+
+      if ($order) {
+        $qtdStpck = $order[0]->products[0]->quantity_in_stock - $request->quantity_product_order;
+         $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]); 
+         return redirect()->back()->with('status','Order Updated Successfully');
+       }else {
+         return redirect('/list-order')->with('error','Erro');
+       }
+ 
+  
     }
 
     public function updateStatus(int $id,string $status){
-      dd($status);
-      $product = Order::where('id',$request->id)->update(['status' => $status]);
-      return redirect('/list-order');
+      $order = Order::where('id',$id)->update(['status' => $status]);
+
+      if ($order) {
+        return redirect('/list-order')->with('update','Status  updated!!');
+      }
+
+      return redirect('/list-order')->with('notUpadate','Status not updated!!');
+
+
     }
 
     public function destroy($id){

@@ -1,4 +1,8 @@
-@extends('layouts.app')
+<header>
+  <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+  ></script>
 <div class="container">
   <div class=" clearfix mt-5 ">
    <div class=" float-start ">
@@ -15,7 +19,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled link-dark link-nav" href="#" >{{ auth()->user()->name }}</a>
+        <a class="nav-link disabled link-dark link-nav" href="#" >{{$username}}</a>
       </li>
       <li class="nav-item">
           <a class="nav-link link-dark link-nav" href="{{ route('signout') }}">Logout</a>
@@ -25,4 +29,4 @@
    </div>
   </div>
 </div>
-  
+</header>

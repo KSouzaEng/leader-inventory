@@ -30,7 +30,8 @@ Route::get('list-order',[OrderController::class, 'index'] )->name('list-order');
 Route::get('form-order',[OrderController::class, 'formOrder'] )->name('form-order');
 Route::post('save-order',[OrderController::class, 'create'])->name('save');
 Route::get('order/{id}',[OrderController::class, 'show'] )->name('order');
-Route::get('order/update/status/{id}/{status}',[OrderController::class, 'updateStatus'] )->name('update-status');
+Route::get('order/update/{id}/{status}',[OrderController::class, 'updateStatus'] );
 Route::get('delete/{id}',[OrderController::class, 'destroy'] )->name('destroy');
+Route::put('order/{id}',[OrderController::class, 'update'] )->name('update');
 
 Route::get('list-inventory',[InventoryController::class,'index'])->name('list-inventory');
