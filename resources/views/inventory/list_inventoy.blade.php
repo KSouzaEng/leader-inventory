@@ -25,8 +25,8 @@
    <thead>
      <tr>
        <th>Product Name</th>
-       <th>Quantidade em estoque</th>
-       <th id="th">Change Status</th>
+       <th>Quantity in stock</th>
+       <th id="th">Price</th>
        <th>Actions</th>
      </tr>
    </thead>
@@ -36,24 +36,8 @@
      <tr>
        <td>{{ $product->name }}</td>
        <td >{{ $product->quantity_in_stock }}</td>
-       <td>
-        <div class="btn-group">
-          <button
-           type="button"
-           class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-           data-mdb-toggle="dropdown"
-           aria-expanded="false"
-          >
-           <span class="visually-hidden">Toggle Dropdown</span>
-          </button>
-          {{-- <ul class="dropdown-menu">
-           <li><a class="dropdown-item"  href="order/update/{{ $order->id }}/OPEN">OPEN</a></li>
-           <li><a class="dropdown-item" href="order/update/{{ $order->id }}/PROGRESS">PROGRESS</a></li>
-           <li><a class="dropdown-item" href="order/update/{{ $order->id }}/CLOSED">CLOSED</a></li>
-          </ul> --}}
-          </div>
-         
-       </td>
+       <td>{{ $product->price_per_unit }}</td>
+   
        <td> 
           <div class="d-grid gap-2 d-md-block">
 
@@ -68,7 +52,9 @@
  </table>
 
  
-
+ <div class="d-flex justify-content-center mt-3 pagination pagination-circle">
+  {!! $products->links() !!}
+</div>
 </div>
 
 @endsection
