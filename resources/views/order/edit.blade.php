@@ -43,15 +43,15 @@
                         <div class="row">
                             <div class="col-sm-4 mb-3">
                                 <label for="quantity_product_order" class="fw-bold">Quantity</label>
-                                <input type="text" name="quantity_product_order" value="{{ $order[0]->quantity_product_order  }}" class="form-control" name="quantity_product_order">
+                                <input type="text" name="quantity_product_order" id="qtd" value="{{ $order[0]->quantity_product_order }}" class="form-control" name="quantity_product_order" onmouseout="Soma()">
                             </div>
                             <div class="col-sm-4 mb-3">
                                 <label for="price" class="fw-bold">Price Unity</label>
-                                <input type="text" name="price" value="{{ $order[0]->products[0]->price_per_unit }}"  class="form-control" id="price">
+                                <input type="text" name="price" value="{{ $order[0]->products[0]->price_per_unit }}"  class="form-control" id="price" @disabled(true)>
                             </div>
                             <div class="col-sm-4 mb-3">
                                 <label for="quantity_in_stock" class="fw-bold">Quantity in Stock</label>
-                                <input type="text" name="quantity_in_stock" value="{{ $order[0]->products[0]->quantity_in_stock }}"  class="form-control" id="quantity_product_order">
+                                <input type="text" name="quantity_in_stock" value="{{ $order[0]->products[0]->quantity_in_stock }}"  class="form-control" id="quantity_in_stock" @disabled(true)>
                             </div>
                             <div class="col-sm-4 mb-3">
                                 <label for="total_order" class="fw-bold">Total Order</label>
@@ -63,7 +63,7 @@
                                     <option  value="{{ $order[0]->status }}"  >
                                         {{ $order[0]->status }}
                                     </option>
-                                    <option value="PROGRESS">PROGRESS</option>
+                                    <option value="OPEN">OPEN</option>
                                     <option value="CLOSED">CLOSED</option>
                                 </select>
                             </div>
@@ -86,11 +86,21 @@
                 const element = x[index]['id'];
                 if (element == dop) {
                     document.getElementById("price").value = x[index]['price_per_unit'];
-                    document.getElementById("quantity_product_order").value = x[index]['quantity_in_stock'];
+                    document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
                
                 }   
             }
     
+        }
+
+        function Soma(products){
+          var qtd =  document.getElementById("qtd").value;
+          var price =  document.getElementById("price").value;
+
+          var soma = qtd * price;
+          document.getElementById("total").value = soma;
+     
+          
         }
     </script>
 </div>

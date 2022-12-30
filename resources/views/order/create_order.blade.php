@@ -3,7 +3,7 @@
 
 @section('content')
 
-<x-navbar :username="auth()->user()->name"/>
+
 {{-- <div class="col-md-4 mx-0">
         <div class="alert alert-warning d-flex justify-content-center" role="alert">
             @if(session('error'))
@@ -11,10 +11,18 @@
             @endif
         </div>
     </div> --}}
+<div class="row">
+    <div class="col-md-4 mt-5">
+        <a href="{{ route('dashboard') }}" class="btn btn-primary btn-floating ">
+            <i class="fas fa-arrow-circle-left fa-lg"></i>
+          </a>
+    </div>
+    <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
+</div>
 <div class="cotainer mt-5">
-
+    
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="card">
                 <h3 class="card-header text-center">Create Order Form</h3>
                 <div class="card-body">
@@ -37,13 +45,18 @@
                           <input type="hidden" id="hidden" name="price" >
                         </div>
                         <div class="col-12">
-                            <label for="quantity_product_order" class="form-label">Product in stock :</label>
-                            <input type="text" class="form-control" id="quantity_product_order"  @disabled(true) >
+                            <label for="quantity_in_stock" class="form-label">Product in stock :</label>
+                            <input type="text" class="form-control" id="quantity_in_stock"  @disabled(true) >
                           </div>  
-                        <div class="col-12 mb-3">
-                            <label for="qtd" class="form-label">Quantity:</label>
-                            <input type="text" class="form-control" id="qtd" name="qtd" required>
-                          </div>   
+                        <div class="col-md-6 mb-3">
+                            <label for="quantity_product_order" class="form-label">Quantity:</label>
+                            <input type="text" class="form-control" id="quantity_product_order" name="quantity_product_order" onmouseout="Soma()" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="qtd" class="form-label">Total:</label>
+                            <input type="text" class="form-control" id="total" name="total" required>
+                        </div>
+                        
                         <div class="d-grid mx-auto">
                             <button type="submit" class="btn btn-dark btn-block">Save Order</button>
                         </div>
@@ -61,10 +74,20 @@
             if (element == dop) {
                 document.getElementById("hidden").value = x[index]['price_per_unit'];
                 document.getElementById("price").value = x[index]['price_per_unit'];
-                document.getElementById("quantity_product_order").value = x[index]['quantity_in_stock'];
+                document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
             }
         }
 
     }
+    function Soma(){
+          var qtd =  document.getElementById("quantity_product_order").value;
+          var price =  document.getElementById("price").value;
+
+          var soma = qtd * price;
+        //   formatValue = new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(soma);
+          document.getElementById("total").value = soma;
+     
+          
+        }
 </script>
 @endsection

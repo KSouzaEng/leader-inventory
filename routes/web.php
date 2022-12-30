@@ -20,7 +20,7 @@ use App\Http\Controllers\InventoryController;
 // });
 
 Route::get('/', [AuthController::class, 'index'])->name('index');
-Route::get('dashboard', [AuthController::class, 'dashboard']); 
+Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard'); 
 Route::post('custom-login', [AuthController::class, 'login'])->name('signin'); 
 Route::get('registration', [AuthController::class, 'register'])->name('register-user');
 Route::post('custom-registration', [AuthController::class, 'registerUser'])->name('register'); 
