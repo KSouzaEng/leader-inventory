@@ -5,9 +5,7 @@
   ></script>
 <div class="container">
   <div class=" clearfix mt-5 ">
-   <div class=" float-start ">
-    <a href="javascript:history.back()" class="link-nav">Go Back</a>
-   </div>
+
    <div class=" float-end">
     <ul class="nav ">
       <li class="nav-item">

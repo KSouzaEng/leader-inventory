@@ -2,10 +2,15 @@
 @section('title','Create Order')
 
 
-<x-navbar :username="auth()->user()->name"/>
-
-@section('content')
-  
+@section('content')  
+<div class="row">
+  <div class="col-md-4 mt-5">
+      <a href="{{ route('dashboard') }}" class="btn btn-primary btn-floating">
+          <i class="fas fa-arrow-circle-left fa-lg"></i>
+        </a>
+  </div>
+  <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
+</div>
 @if(session('msg'))
 <div class="alert alert-success d-flex justify-content-center" role="alert">
  <div class="col-md-2">
@@ -65,9 +70,10 @@
      @endforeach
    </tbody>
  </table>
-
- 
-
+{{-- Pagination --}}
+<div class="d-flex justify-content-center">
+  {!! $orders->links() !!}
+</div>
 </div>
 
 @endsection
