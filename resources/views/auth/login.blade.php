@@ -24,13 +24,13 @@
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group mb-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <a class="nav-link" href="{{ route('register-user') }}">Register</a>
-                                    </label>
-                                </div>
-                            </div>
+                            
+                              <div class="form-check d-flex justify-content-center mb-4">
+                                <label class="form-check-label" for="form2Example33">
+                                    <a class="nav-link" href="{{ route('register-user') }}">Don't have an account? Register</a>
+                                </label>
+                              </div>
+                            
                             <div class="d-grid mx-auto">
                                 <button type="submit" class="btn btn-dark btn-block">SignIn</button>
                             </div>

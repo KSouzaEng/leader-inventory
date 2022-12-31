@@ -13,8 +13,8 @@
     </div> --}}
 <div class="row">
     <div class="col-md-4 mt-5">
-        <a href="{{ route('dashboard') }}" class="btn btn-primary btn-floating ">
-            <i class="fas fa-arrow-circle-left fa-lg"></i>
+        <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating ">
+            <i class="far fa-hand-point-left fa-lg" ></i>
           </a>
     </div>
     <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
@@ -50,7 +50,7 @@
                           </div>  
                         <div class="col-md-6 mb-3">
                             <label for="quantity_product_order" class="form-label">Quantity:</label>
-                            <input type="text" class="form-control" id="quantity_product_order" name="quantity_product_order" onmouseout="Soma()" required>
+                            <input type="text" class="form-control" id="quantity_product_order" name="quantity_product_order" onkeyup="Soma()" required>
                         </div>
                         <div class="col-md-6">
                             <label for="qtd" class="form-label">Total:</label>

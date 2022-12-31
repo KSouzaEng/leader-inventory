@@ -5,8 +5,8 @@
 @section('content')  
 <div class="row">
   <div class="col-md-4 mt-5">
-      <a href="{{ route('dashboard') }}" class="btn btn-primary btn-floating">
-          <i class="fas fa-arrow-circle-left fa-lg"></i>
+      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating">
+        <i class="far fa-hand-point-left fa-lg" ></i>
         </a>
   </div>
   <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
@@ -59,10 +59,17 @@
          
        </td>
        <td> 
-          <div class="d-grid gap-2 d-md-block">
-
-             <a class="btn btn-warning" type="button" href="{{route('order',"$order->id")}}"><i class="fas fa-exchange-alt"></i>  UPDATE</a>
-             <a class="btn btn-danger" type="button" href="{{route('destroy',"$order->id")}}"><i class="fas fa-trash"></i>  DELETE</a>
+          <div class="row">
+             <div class="col-sm-2">
+              <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
+             </div>
+             <div class="col-sm-4">
+              <form action="/delete/{{ $order->id }}" method="post" >
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
+                </form>
+             </div>
            </div>
          </td>
      </tr>
