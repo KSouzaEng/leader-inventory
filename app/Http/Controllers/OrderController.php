@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
+use App\Events\EventNewOrder;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
 
       public function index(){
-        $orders = Order::orderBy('id','asc')->with('products')->paginate(2);
+        $orders = Order::orderBy('id','desc')->with('products')->paginate(5);
         // $username = Auth::user()->name;
 
         return view('order.list_orders',compact('orders'));
@@ -30,7 +31,7 @@ class OrderController extends Controller
       $order_code = rand();
 
       $quantityInStock = Product::where('id',$request->product_id)->first();
-      $error = 'Sem produtos em estoque ou estoque zerado';
+      $error = 'No product in stock';
 
       if ($quantityInStock->quantity_in_stock < $request->quantity_product_order || $quantityInStock->quantity_in_stock == 0 ) {
         return redirect('/form-order')->with('error',$error);
@@ -44,9 +45,9 @@ class OrderController extends Controller
       ]);
 
       if ($order) {
-       $qtdStpck = $quantityInStock->quantity_in_stock - $request->qtd;
-        $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]); 
-        return Redirect('/list-order');
+       $qtdStpck = $quantityInStock->quantity_in_stock - $request->quantity_product_order;
+        $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]);
+        return Redirect('/list-order')->with('success','Order saved');
       }else {
         return redirect('/list-order')->with('error','Erro');
       }

@@ -11,7 +11,7 @@
                             @csrf
                             <div class="form-group mb-3">
                                 <input type="text" placeholder="Name" id="name" class="form-control" name="name"
-                                    required autofocus>
+                                    required>
                                 @if ($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
@@ -30,11 +30,12 @@
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group mb-3">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="remember"> Remember Me</label>
-                                </div>
+                            <div class="col-md-8 mt-1 mb-3">
+                                <label class="form-check-label" for="form2Example33">
+                                    <a class="nav-link" href="{{ route('index') }}">Go Back to Login</a>
+                                </label>
                             </div>
+                            
                             <div class="d-grid mx-auto">
                                 <button type="submit" class="btn btn-dark btn-block">Sign up</button>
                             </div>

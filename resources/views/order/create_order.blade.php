@@ -3,18 +3,19 @@
 
 @section('content')
 
-
-{{-- <div class="col-md-4 mx-0">
-        <div class="alert alert-warning d-flex justify-content-center" role="alert">
-            @if(session('error'))
-                <h4>{{ session('error') }}</h4>
-            @endif
-        </div>
-    </div> --}}
+@if(session('error'))
+<div hidden class="alert alert-danger d-flex align-items-center alert-dismissible fade show mt-3" role="alert" >
+  <i class="fas fa-times-circle flex-shrink-0 me-2"></i>
+  <div class="d-flex">
+    {{ session('error') }}
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="row">
     <div class="col-md-4 mt-5">
-        <a href="{{ route('dashboard') }}" class="btn btn-primary btn-floating ">
-            <i class="fas fa-arrow-circle-left fa-lg"></i>
+        <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating ">
+            <i class="far fa-hand-point-left fa-lg" ></i>
           </a>
     </div>
     <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
@@ -47,10 +48,12 @@
                         <div class="col-12">
                             <label for="quantity_in_stock" class="form-label">Product in stock :</label>
                             <input type="text" class="form-control" id="quantity_in_stock"  @disabled(true) >
+                            <p hidden class="text-danger mt-1" id="praragraph">No product in stock</p>
+                            <p hidden class="text-danger mt-1" id="low">Low stock</p>
                           </div>  
                         <div class="col-md-6 mb-3">
                             <label for="quantity_product_order" class="form-label">Quantity:</label>
-                            <input type="text" class="form-control" id="quantity_product_order" name="quantity_product_order" onmouseout="Soma()" required>
+                            <input type="text" class="form-control" id="quantity_product_order" name="quantity_product_order" onkeyup="Soma()" required>
                         </div>
                         <div class="col-md-6">
                             <label for="qtd" class="form-label">Total:</label>
@@ -75,7 +78,19 @@
                 document.getElementById("hidden").value = x[index]['price_per_unit'];
                 document.getElementById("price").value = x[index]['price_per_unit'];
                 document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
+
+                var stock = x[index]['quantity_in_stock'];
+                let p = document.getElementById('praragraph');
+                let p2 = document.getElementById('low');
+                console.log(stock);
+                if (stock == 0 ) {
+               
+                    p.removeAttribute("hidden");
+                }else if(stock <= 10){
+                    p2.removeAttribute("hidden");
+                }
             }
+          
         }
 
     }
