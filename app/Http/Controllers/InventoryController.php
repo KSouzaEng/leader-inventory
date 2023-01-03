@@ -10,7 +10,7 @@ class InventoryController extends Controller
 {
     public function index(){
 
-        $products = Product::paginate(5);
+        $products = Product::orderBy('id','desc')->paginate(5);
         $username = Auth::user()->name;
 
         return view('inventory.list_inventoy',compact('products','username'));

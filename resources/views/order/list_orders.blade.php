@@ -11,17 +11,13 @@
   </div>
   <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
 </div>
-@if(session('msg'))
-<div class="alert alert-success d-flex justify-content-center" role="alert">
- <div class="col-md-2">
-     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-       </svg> 
- </div>   
-<div class="col-md-2">
- <h4>{{ session('msg') }}</h4>
-</div>
-
+@if(session('success'))
+<div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+  <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
+  <div class="d-flex">
+   {{ session('success') }}
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 <div class="container">
@@ -29,16 +25,18 @@
    <thead>
      <tr>
        <th>Order Code</th>
+       <th>Product Name</th>
        <th>Status</th>
-       <th id="th">Change Status</th>
+       <th>Change Status</th>
        <th>Actions</th>
      </tr>
    </thead>
    <tbody>
-     @foreach ($orders as $order)
+     @foreach ($orders as $key => $order)
      @foreach ($order->products as $product)
      <tr>
        <td>{{ $order->order_code }}</td>
+       <td>{{ $product->name }}</td>
        <td >{{ $order->status }}</td>
        <td>
         <div class="btn-group">

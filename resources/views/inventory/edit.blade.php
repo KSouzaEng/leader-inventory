@@ -10,14 +10,14 @@
         </div>
         @endif
  
-<div class="row">
-    <div class="col-md-4 mt-5">
-        <a href="{{ route('dashboard') }}" class="btn btn-primary btn-floating ">
-            <i class="fas fa-arrow-circle-left fa-lg"></i>
-          </a>
-    </div>
-    <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-</div>
+        <div class="row">
+          <div class="col-md-4 mt-5">
+              <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating">
+                <i class="far fa-hand-point-left fa-lg" ></i>
+                </a>
+          </div>
+          <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
+        </div>
 <div class="cotainer mt-5">
     
     <div class="row justify-content-center">
