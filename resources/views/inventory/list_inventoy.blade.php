@@ -1,23 +1,36 @@
 
 @extends('layouts.app')
-@section('title','Create Order')
+@section('title','List Inventory')
 
-
-<x-navbar :username="auth()->user()->name"/>
 
 @section('content')
+<div class="row">
+  <div class="col-md-4 mt-5">
+      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating">
+        <i class="far fa-hand-point-left fa-lg" ></i>
+        </a>
+  </div>
   
-@if(session('msg'))
-<div class="alert alert-success d-flex justify-content-center" role="alert">
- <div class="col-md-2">
-     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-       </svg> 
- </div>   
-<div class="col-md-2">
- <h4>{{ session('msg') }}</h4>
+  <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
 </div>
+  
+@if(session('success'))
+<div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+  <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
+  <div class="d-flex">
+   {{ session('success') }}
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 
+@if(session('msg'))
+<div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+  <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
+  <div class="d-flex">
+   {{ session('msg') }}
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 <div class="container">
@@ -39,11 +52,17 @@
        <td>{{ $product->price_per_unit }}</td>
    
        <td> 
-          <div class="d-grid gap-2 d-md-block">
-
-             <a class="btn btn-warning" type="button" href=""><i class="fas fa-exchange-alt"></i>  UPDATE</a>
-             <a class="btn btn-danger" type="button" href=""><i class="fas fa-trash"></i>  DELETE</a>
+        <div class="row">
+          <div class="col-sm-2">
+            <a class="btn btn-warning btn-floating" type="button" href="{{route('product',"$product->id")}}" data-mdb-toggle="tooltip" title="UPADATE"><i class="fas fa-edit"></i></a>
            </div>
+           <div class="col-sm-4">
+            <form action="/delete/product/{{ $product->id }}" method="post" >
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
+              </form>
+         </div>
          </td>
      </tr>
      @endforeach

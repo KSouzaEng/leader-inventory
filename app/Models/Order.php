@@ -18,6 +18,7 @@ class Order extends Model
         'quantity_product_order',
         'total_order',
         'status',
+        'new',
 
     ];
 
