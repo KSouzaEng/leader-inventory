@@ -28,6 +28,7 @@
        <th>Product Name</th>
        <th>Status</th>
        <th>Change Status</th>
+       <th>New Order</th>
        <th>Actions</th>
      </tr>
    </thead>
@@ -37,7 +38,21 @@
      <tr>
        <td>{{ $order->order_code }}</td>
        <td>{{ $product->name }}</td>
-       <td >{{ $order->status }}</td>
+       @if($order->status == 'OPEN')
+       <td id="td">
+        <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
+        </td>
+        @endif
+        @if($order->status == 'PROGRESS')
+        <td>
+          <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning" >{{ $order->status }}</span></h6>
+        </td>
+        @endif
+        @if($order->status == 'CLOSED')
+        <td>
+        <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger" >{{ $order->status }}</span></h6>
+       </td>
+        @endif
        <td>
         <div class="btn-group">
           <button
@@ -54,7 +69,11 @@
            <li><a class="dropdown-item" href="order/update/{{ $order->id }}/CLOSED">CLOSED</a></li>
           </ul>
           </div>
-         
+       </td>
+       <td>
+        @if ($order->status == 'OPEN' && $order->new == 1)
+        <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-success" >New</span></h6>
+        @endif
        </td>
        <td> 
           <div class="row">
@@ -75,10 +94,40 @@
      @endforeach
    </tbody>
  </table>
+</div>
 {{-- Pagination --}}
 <div class="d-flex justify-content-center">
   {!! $orders->links() !!}
 </div>
 </div>
 
+<script type="module">
+
+    var publico =  document.getElementById("publico");
+    var td =  document.getElementById("no");
+    // var order = @json($orders);
+    // let id
+    // const myServices = [];
+    // @foreach ($orders as $service)
+    //     myServices.push('{{ $service->id }}');
+    // @endforeach
+    // console.log(myServices)
+
+    Echo.channel('order')
+    .listen('NewOrder', (e) => {
+        // console.log(e.order['id']);
+        alert('New Order')
+       setTimeout(() => {
+      
+        }, 200);
+        window.location.reload(true);
+        // if (r == true){
+        //   window.location.reload();
+        // }
+        // td.hidden = true;
+        // publico.innerHTML += "<h6>"+'<span class="badge badge-success">'+"New"+"</span>"+"</h6>"
+        
+    });
+
+</script>
 @endsection

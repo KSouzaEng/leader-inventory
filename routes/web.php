@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InventoryController;
+use App\Events\chanellPublico;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,3 +41,7 @@ Route::post('save-product',[InventoryController::class,'create'])->name('save-pr
 Route::get('product/{id}',[InventoryController::class, 'show'] )->name('product');
 Route::put('update/product/{id}',[InventoryController::class, 'update'] )->name('update');
 Route::delete('delete/product/{id}',[InventoryController::class, 'destroy'] )->name('destroy');
+
+Route::get('broadcast', function(){
+    broadcast(new chanellPublico('New'));
+});

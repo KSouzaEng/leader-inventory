@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->boolean('new')->default(0)->after('status');
+            $table->boolean('new')->default(1)->after('status');
         });
     }
 
