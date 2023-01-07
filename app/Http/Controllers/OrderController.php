@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Events\EventNewOrder;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NewOrder;
 
 class OrderController extends Controller
 {
@@ -41,12 +42,14 @@ class OrderController extends Controller
         "product_id" => $request->product_id,
         "order_code" => $order_code,
         "quantity_product_order" => $request->quantity_product_order,
-        "total_order" => $total
+        "total_order" => $total,
       ]);
 
       if ($order) {
        $qtdStpck = $quantityInStock->quantity_in_stock - $request->quantity_product_order;
         $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]);
+        $orderFind = Order::find($order->id) ;
+        broadcast(new NewOrder($orderFind));
         return Redirect('/list-order')->with('success','Order saved');
       }else {
         return redirect('/list-order')->with('error','Erro');
@@ -81,6 +84,7 @@ class OrderController extends Controller
       if ($order) {
         $qtdStpck = $orderDB[0]->products[0]->quantity_in_stock - $request->quantity_product_order;
          $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]); 
+       
          return redirect()->back()->with('status','Order Updated Successfully');
        }else {
          return redirect('/list-order')->with('error','Erro');
@@ -91,8 +95,11 @@ class OrderController extends Controller
 
     public function updateStatus(int $id,string $status){
       $order = Order::where('id',$id)->update(['status' => $status]);
+    
 
       if ($order) {
+        $orderFind = Order::find($order) ;
+        broadcast(new NewOrder($orderFind));
         return redirect('/list-order')->with('update','Status  updated!!');
       }
 
