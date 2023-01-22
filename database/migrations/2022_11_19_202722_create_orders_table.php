@@ -15,12 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('product_id');
-
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('order_code');
-            $table->integer('quantity_product_order');
-            $table->double('total_order');
+            $table->string('customer_name');
+            $table->string('customer_email')->nullable();
             $table->string('status')->default('OPEN');
             $table->softDeletes();
             $table->timestamps();

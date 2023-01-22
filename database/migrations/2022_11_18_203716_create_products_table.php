@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('quantity_in_stock');
-            $table->double('price_per_unit');
+            $table->double('price_per_unit',15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

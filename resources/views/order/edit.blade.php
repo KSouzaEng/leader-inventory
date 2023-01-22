@@ -1,108 +1,164 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="row">
+    <div class="col-md-4 mt-5">
+        <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
+          <i class="fas fa-arrow-left"></i>
+            Back 
+          </a>
+    </div>
+    <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
+  </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">
+                @if (session('status'))
+                    <h6 class="alert alert-success">{{ session('status') }}</h6>
+                @endif
 
-            @if (session('status'))
-                <h6 class="alert alert-success">{{ session('status') }}</h6>
-            @endif
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>UPDATE ORDER
+                           
+                        </h4>
+                    </div>
+                    <div class="card-body">
 
-            <div class="card">
-                <div class="card-header">
-                    <h4>UPDATE ORDER
-                        <a href="{{ route('list-order') }}" class="btn btn-danger float-end">BACK</a>
-                    </h4>
-                </div>
-                <div class="card-body">
-
-                    <form action="{{ url('order/'.$order[0]->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="row">
-                            <div class="col-sm-2 mb-3 ">
-                                <label for="" class="fw-bold">Order Code</label>
-                                <input type="text" name="name" value="{{ $order[0]->order_code }}"  class="form-control " @disabled(true)>
+                        <form action="{{ url('order/' . $order[0]->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="col-md-12 mb-3">
+                                <label for="customer_name" class="form-label ">Customer Name <span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ $order[0]->customer_name }}" required>
                             </div>
-                            <div class="col mb-3">
-                                <label for="product_id" class="fw-bold">Product Name</label>
-                                <select name="product_id" class="form-select text-capitalize" id="product_id" onchange="getValue({{ $products }})">
-                                    @foreach ($products as $key => $product)
-                                    <option  value="{{ $product->id }}" {{$order[0]->products[0]->id == $product->id  ? 'selected' : ''}} >
-                                        {{ $product->name }}
-                                    </option>
+                            <div class="col-md-12 mb-4">
+                                <label for="customer_email" class="form-label">Customer Email <span
+                                        class="text-danger">*</span>:</label>
+                                <input type="email" class="form-control" id="customer_email" name="customer_email"
+                                value="{{ $order[0]->customer_email }}"   required>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label for="status" class="form-label">Status<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" class="form-control" id="status" name="status"
+                                value="{{ $order[0]->status }}"   required>
+                            </div>
+                            <table class="table" id="products_table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($order[0]->products as $item)
+                                    <tr id="product0">
+                                        <td>
+                                            <select name="products[]" class="form-control"
+                                                onchange="getValue({{ $products }})">
+                                                <option value="">-- choose product --</option>
+                                                @foreach ($products as $key => $product)
+                                                    <option value="{{ $product->id }}" @if ($product->id == old('products[]', $product->id))@endif>
+                                                        
+                                                        {{ $product->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="quantities[]" class="form-control" value="{{ $item->pivot->quantity_product_order }}" />
+                                        </td>
+                                        <td>
+
+                                            <input type="text" name="prices[]" class="form-control" id="price"   value="{{ $item->pivot->price }}"/>
+
+                                        </td>
+                                        <td>
+                                            <input type="number" name="total[]" class="form-control" 
+                                            value="{{ $item->pivot->total }}"  id="quantities" />
+                                        </td>
+                                    </tr>
                                     @endforeach
-                                   
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-sm-4 mb-3">
-                                <label for="quantity_product_order" class="fw-bold">Quantity</label>
-                                <input type="text" name="quantity_product_order" id="qtd" value="{{ $order[0]->quantity_product_order }}" class="form-control" name="quantity_product_order" onmouseout="Soma()">
-                            </div>
-                            <div class="col-sm-4 mb-3">
-                                <label for="price" class="fw-bold">Price Unity</label>
-                                <input type="text" name="price" value="{{ $order[0]->products[0]->price_per_unit }}"  class="form-control" id="price" @disabled(true)>
-                            </div>
-                            <div class="col-sm-4 mb-3">
-                                <label for="quantity_in_stock" class="fw-bold">Quantity in Stock</label>
-                                <input type="text" name="quantity_in_stock" value="{{ $order[0]->products[0]->quantity_in_stock }}"  class="form-control" id="quantity_in_stock" @disabled(true)>
-                            </div>
-                            <div class="col-sm-4 mb-3">
-                                <label for="total_order" class="fw-bold">Total Order</label>
-                                <input type="text" name="total_order" value="{{ $order[0]->total_order }}"  class="form-control" id="total">
-                            </div>
-                            <div class="col mb-3">
-                                <label for="status" class="fw-bold">Status</label>
-                                <select name="status" class="form-select" id="status" >
-                                    <option  value="{{ $order[0]->status }}"  >
-                                        {{ $order[0]->status }}
-                                    </option>
-                                    <option value="OPEN">OPEN</option>
-                                    <option value="CLOSED">CLOSED</option>
-                                </select>
-                            </div>
-                        </div>
-                      
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-primary" type="submit">Button</button>
-                          </div>
+                                    <tr id="product1"></tr>
+                                </tbody>
+                            </table>
 
-                    </form>
+                            <div class="row ">
+                                <div class="col-md-12 ">
+                                    <button id="add_row" class="btn btn-default pull-left">+ Add Row</button>
+                                    <button id='delete_row' class="pull-right btn btn-danger justify-content-end">- Delete
+                                        Row</button>
+                                </div>
+                            </div>
 
+
+                            {{-- <div class="col-12">
+                    <label for="quantity_in_stock" class="form-label">Product in stock :</label>
+                    <input type="text" class="form-control" id="quantity_in_stock"  @disabled(true) >
+                    <p hidden class="text-danger mt-1" id="praragraph">No product in stock</p>
+                    <p hidden class="text-danger mt-1" id="low">Low stock</p>
+                  </div>   --}}
+                            {{-- <div class="col-md-6">
+                    <label for="qtd" class="form-label">Total:</label>
+                    <input type="text" class="form-control" id="total" name="total" required>
+                </div>
+                 --}}
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-dark ">Save Order</button>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        function getValue(x){
-            var dop = document.getElementById("product_id").value;
-            for (let index = 0; index < x.length; index++) {
-                const element = x[index]['id'];
-                if (element == dop) {
-                    document.getElementById("price").value = x[index]['price_per_unit'];
-                    document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
-               
-                }   
+        <script>
+            function getValue(x) {
+                var dop = document.getElementById("product_id").value;
+                for (let index = 0; index < x.length; index++) {
+                    const element = x[index]['id'];
+                    if (element == dop) {
+                        document.getElementById("price").value = x[index]['price_per_unit'];
+                        document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
+
+                    }
+                }
+
             }
-    
-        }
 
-        function Soma(products){
-          var qtd =  document.getElementById("qtd").value;
-          var price =  document.getElementById("price").value;
+            function Soma(products) {
+                var qtd = document.getElementById("qtd").value;
+                var price = document.getElementById("price").value;
 
-          var soma = qtd * price;
-          document.getElementById("total").value = soma;
-     
-          
-        }
-    </script>
-</div>
+                var soma = qtd * price;
+                document.getElementById("total").value = soma;
 
+
+            }
+            $(document).ready(function() {
+                let row_number = 1;
+                $("#add_row").click(function(e) {
+                    e.preventDefault();
+                    let new_row_number = row_number - 1;
+                    $('#product' + row_number).html($('#product' + new_row_number).html()).find(
+                        'td:first-child');
+                    $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
+                    row_number++;
+                });
+
+                $("#delete_row").click(function(e) {
+                    e.preventDefault();
+                    if (row_number > 1) {
+                        $("#product" + (row_number - 1)).html('');
+                        row_number--;
+                    }
+                });
+            })
+        </script>
+    </div>
 @endsection
