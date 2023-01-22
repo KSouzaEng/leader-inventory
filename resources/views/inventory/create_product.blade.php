@@ -12,9 +12,10 @@
  
 <div class="row">
     <div class="col-md-4 mt-5">
-        <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating ">
-            <i class="far fa-hand-point-left fa-lg" ></i>
-          </a>
+      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
+        <i class="fas fa-arrow-left"></i>
+          Back 
+        </a>
     </div>
     <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
 </div>
