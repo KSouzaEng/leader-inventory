@@ -13,8 +13,9 @@ class OrderController extends Controller
 {
 
       public function index(){
-        $orders = Order::orderBy('id','desc')->with('products')->paginate(5);
-        // $username = Auth::user()->name;
+
+        $orders = Order::with('products')->paginate(2);
+        // dd($orders);
 
         return view('order.list_orders',compact('orders'));
     }
@@ -27,33 +28,57 @@ class OrderController extends Controller
         return view('order.create_order',compact('products'));
     }
     public function create(Request $request){
+      // dd($request->all());
 
-      $total = $request->price * $request->quantity_product_order;
+
+      // $total = $request->price * $request->quantity_product_order;
       $order_code = rand();
 
-      $quantityInStock = Product::where('id',$request->product_id)->first();
-      $error = 'No product in stock';
+      // $quantityInStock = Product::where('id',$request->product_id)->first();
+      // $error = 'No product in stock';
 
-      if ($quantityInStock->quantity_in_stock < $request->quantity_product_order || $quantityInStock->quantity_in_stock == 0 ) {
-        return redirect('/form-order')->with('error',$error);
-      }
+      // if ($quantityInStock->quantity_in_stock < $request->quantity_product_order || $quantityInStock->quantity_in_stock == 0 ) {
+      //   return redirect('/form-order')->with('error',$error);
+      // }
+
+      // $p = array();
+
+      // foreach($request->product_id as $key => $product) {
+      //   array_push($p,$product);
+      // }
         
-      $order = Order::create([
-        "product_id" => $request->product_id,
-        "order_code" => $order_code,
-        "quantity_product_order" => $request->quantity_product_order,
-        "total_order" => $total,
-      ]);
+  
+    // dd($order->id);
+    $order = Order::create($request->all());
 
-      if ($order) {
-       $qtdStpck = $quantityInStock->quantity_in_stock - $request->quantity_product_order;
-        $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]);
-        $orderFind = Order::find($order->id) ;
-        broadcast(new NewOrder($orderFind));
-        return Redirect('/list-order')->with('success','Order saved');
-      }else {
-        return redirect('/list-order')->with('error','Erro');
-      }
+    $products = $request->input('products', []);
+    $quantities = $request->input('quantities', []);
+    $prices = $request->input('prices', []);
+    $total = $request->input('total', []);
+    for ($product=0; $product < count($products); $product++) {
+        if ($products[$product] != '') {
+            $order->products()->attach($products[$product], 
+            [
+            'quantity_product_order' => $quantities[$product],
+             'price' =>$prices[$product],
+             'total' =>$total[$product]
+          ]);
+          $orderFind = Order::find($order->id);
+          broadcast(new NewOrder($orderFind));
+        }
+    }
+
+    return Redirect('/list-order')->with('success','Order saved');
+
+      // if ($order) {
+      //  $qtdStpck = $quantityInStock->quantity_in_stock - $request->quantity_product_order;
+      //   $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]);
+      //   $orderFind = Order::find($order->id) ;
+      //   broadcast(new NewOrder($orderFind));
+      //   return Redirect('/list-order')->with('success','Order saved');
+      // }else {
+      //   return redirect('/list-order')->with('error','Erro');
+      // }
 
     }
   
@@ -66,26 +91,52 @@ class OrderController extends Controller
 
     }
     public function update(Request $request,int $id){
-      $orderDB = Order::where('id',$id)->with('products')->get();
-      // dd($orderDB[0]->products[0]->quantity_in_stock);
-
-      if ($orderDB[0]->products[0]->quantity_in_stock < $request->quantity_product_order || $orderDB[0]->products[0]->quantity_in_stock  == 0 ) {
-        return redirect('order.edit')->with('error','');
-      }
   
+      $orderDB = Order::where('id',$id)->with('products')->get();
+
+      // foreach ($orderDB[0]->products as $key => $value) {
+      //   if ($value->quantity_in_stock < $request->quantities[$key]) {
+      //     return redirect('/list-order')->with('error','Low Stock');
+      //   }
+      // }
+
 
       $order = Order::where('id',$id)->update([
-        'product_id' => $request->product_id,
-        'quantity_product_order' => $request->quantity_product_order,
-        'total_order' => $request->total_order,
+        'customer_name' => $request->customer_name,
+        'customer_email' => $request->customer_email,
         'status' => $request->status,
       ]);
+      $orderDetach = Order::find($id);
+      $orderDetach->products()->detach();
+      $products = $request->input('products', []);
+      $quantities = $request->input('quantities', []);
+      $prices = $request->input('prices', []);
+      $total = $request->input('total', []);
+      for ($product=0; $product < count($products); $product++) {
+          if ($products[$product] != '') {
+              $orderDetach->products()->attach($products[$product], 
+              [
+              'quantity_product_order' => $quantities[$product],
+              'price' =>$prices[$product],
+              'total' =>$total[$product]
+            ]);
+            $orderFind = Order::find($id);
+            broadcast(new NewOrder($orderFind));
+          }
+      }
 
       if ($order) {
-        $qtdStpck = $orderDB[0]->products[0]->quantity_in_stock - $request->quantity_product_order;
-         $product = Product::where('id',$request->product_id)->update(['quantity_in_stock' => $qtdStpck]); 
-       
-         return redirect()->back()->with('status','Order Updated Successfully');
+        
+         foreach ($orderDB[0]->products as $key => $value) {
+          $test_value = $value->id;
+          $ids = explode(',',$test_value);
+
+            $qtdStpck = $value->quantity_in_stock - $request->quantities[$key];
+            // dd($qtdStpck);
+            $product = Product::whereIn('id',$ids)->update(['quantity_in_stock' => $qtdStpck]); 
+          
+        }
+         return redirect('/list-order')->with('status','Order Updated Successfully');
        }else {
          return redirect('/list-order')->with('error','Erro');
        }
@@ -98,7 +149,7 @@ class OrderController extends Controller
     
 
       if ($order) {
-        $orderFind = Order::find($order) ;
+        $orderFind = Order::find($id) ;
         broadcast(new NewOrder($orderFind));
         return redirect('/list-order')->with('update','Status  updated!!');
       }
@@ -110,7 +161,10 @@ class OrderController extends Controller
 
     public function destroy($id){
 
-      Order::findOrFail($id)->delete();
+      // Order::findOrFail($id)->delete();
+      $order = Order::find($id);
+      $order->products()->detach();
+      $order->delete();
 
        return redirect('/list-order')->with('msg','Order deleted!!');
    }

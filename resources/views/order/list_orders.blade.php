@@ -5,9 +5,14 @@
 @section('content')  
 <div class="row">
   <div class="col-md-4 mt-5">
-      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-floating">
-        <i class="far fa-hand-point-left fa-lg" ></i>
+      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
+        <i class="fas fa-arrow-left"></i>
+          Back 
         </a>
+        <a href="{{ route('form-order') }}" class="btn btn-dark btn-rounded ">
+          <i class="fas fa-plus"></i>
+          New Order
+          </a>
   </div>
   <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
 </div>
@@ -20,24 +25,43 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(session('error'))
+<div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+  <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
+  <div class="d-flex">
+   {{ session('error') }}
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="container">
  <table class="table  table-hover mt-5">
    <thead>
      <tr>
+        <th>Details</th>
        <th>Order Code</th>
-       <th>Product Name</th>
+       <th>Customer Name</th>
+       <th>Customer E-mail</th>
        <th>Status</th>
        <th>Change Status</th>
-       <th>New Order</th>
        <th>Actions</th>
      </tr>
    </thead>
    <tbody>
      @foreach ($orders as $key => $order)
-     @foreach ($order->products as $product)
-     <tr>
-       <td>{{ $order->order_code }}</td>
-       <td>{{ $product->name }}</td>
+     <tr data-entry-id="{{ $order->id }}">
+        <td>
+            <a>
+                <x-modal :orderId="$order->id" :order="$order" />
+            </a>
+        </td>
+       <td>    {{ $order->id ?? '' }}</td>
+       <td>
+        {{ $order->customer_name ?? '' }}
+        </td>
+        <td>
+            {{ $order->customer_email ?? '' }}
+        </td>
        @if($order->status == 'OPEN')
        <td id="td">
         <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
@@ -70,14 +94,9 @@
           </ul>
           </div>
        </td>
-       <td>
-        @if ($order->status == 'OPEN' && $order->new == 1)
-        <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-success" >New</span></h6>
-        @endif
-       </td>
        <td> 
           <div class="row">
-             <div class="col-sm-2">
+             <div class="col-sm-2 mx-3">
               <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
              </div>
              <div class="col-sm-4">
@@ -90,7 +109,6 @@
            </div>
          </td>
      </tr>
-     @endforeach
      @endforeach
    </tbody>
  </table>
@@ -115,11 +133,8 @@
 
     Echo.channel('order')
     .listen('NewOrder', (e) => {
-        // console.log(e.order['id']);
+        console.log(e.order['id']);
         alert('New Order')
-       setTimeout(() => {
-      
-        }, 200);
         window.location.reload(true);
         // if (r == true){
         //   window.location.reload();

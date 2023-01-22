@@ -13,18 +13,20 @@ class Order extends Model
 
 
     protected $fillable = [
-        'product_id',
-        'order_code',
-        'quantity_product_order',
-        'total_order',
+        'customer_name',
+        'customer_email',
         'status',
-        'new',
-
     ];
+    // protected $casts = [
+    //     'product_id' => 'array'
+    // ];
+    // protected $table = 'index_article';
 
     public function products()
     {
-        return $this->hasMany(Product::class,'id','product_id');
+        // return $this->hasMany(Product::class,'id','product_id');
+        return $this->belongsToMany(Product::class)
+        ->withPivot(['quantity_product_order', 'price','total','deleted_at','created_at','updated_at'])->withTimestamps();
     }
 
 }

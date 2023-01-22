@@ -16,7 +16,7 @@ class Product extends Model
         'quantity_in_stock',
         'price_per_unit',
     ];
-    public function order(){
-        return $this->belongsTo(Order::class);
+    public function orders(){
+        return $this->belongsToMany(Order::class);
     }
 }
