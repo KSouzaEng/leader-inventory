@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<a type="button" class="text-dark" data-mdb-toggle="modal" data-mdb-target="#exampleModal{{ $orderId }}">
+<a type="button" class="text-dark d-flex justify-content-center" data-mdb-toggle="modal" data-mdb-target="#exampleModal{{ $orderId }}">
     <i class="fas fa-eye"></i>
 </a>
 
