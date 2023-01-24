@@ -3,19 +3,8 @@
 
 
 @section('content')  
-<div class="row">
-  <div class="col-md-4 mt-5">
-      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
-        <i class="fas fa-arrow-left"></i>
-          Back 
-        </a>
-        <a href="{{ route('form-order') }}" class="btn btn-dark btn-rounded ">
-          <i class="fas fa-plus"></i>
-          New Order
-          </a>
-  </div>
-  <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-</div>
+ <x-navbar :username="auth()->user()->name"/>
+
 @if(session('success'))
 <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
   <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
@@ -35,50 +24,50 @@
 </div>
 @endif
 <div class="container">
- <table class="table  table-hover mt-5">
-   <thead>
-     <tr>
+ <table class="table align-middle mb-0 bg-whitetable-hover mt-5 ">
+   <thead class="bg-light">
+     <tr class="fs-6">
         <th>Details</th>
        <th>Order Code</th>
        <th>Customer Name</th>
        <th>Customer E-mail</th>
        <th>Status</th>
        <th>Change Status</th>
-       <th>Actions</th>
+       <th >Actions</th>
      </tr>
    </thead>
    <tbody>
      @foreach ($orders as $key => $order)
-     <tr data-entry-id="{{ $order->id }}">
-        <td>
-            <a>
+     <tr data-entry-id="{{ $order->id }}" class="fs-6">
+        <td class="" >
+            <a >
                 <x-modal :orderId="$order->id" :order="$order" />
             </a>
         </td>
-       <td>    {{ $order->id ?? '' }}</td>
-       <td>
-        {{ $order->customer_name ?? '' }}
+       <td><p class="fw-normal mb-1 text-center"> {{ $order->id ?? '' }}</p></td>
+       <td class="text-capitalize">
+        <p class="fw-normal mb-1">{{ $order->customer_name ?? '' }}</p>
         </td>
         <td>
-            {{ $order->customer_email ?? '' }}
+          <p class="fw-normal mb-1"> {{ $order->customer_email ?? '' }}</p>
         </td>
        @if($order->status == 'OPEN')
-       <td id="td">
-        <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
+       <td id="td" class="mx-2" colspan="1">
+        <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success d-inline">{{ $order->status }}</span></h6>
         </td>
         @endif
         @if($order->status == 'PROGRESS')
-        <td>
-          <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning" >{{ $order->status }}</span></h6>
+        <td  colspan="1">
+          <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning d-inline" >{{ $order->status }}</span></h6>
         </td>
         @endif
         @if($order->status == 'CLOSED')
-        <td>
-        <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger" >{{ $order->status }}</span></h6>
+        <td  colspan="1">
+        <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger d-inline" >{{ $order->status }}</span></h6>
        </td>
         @endif
-       <td>
-        <div class="btn-group">
+       <td class="d-flex justify-content-center ">
+        <div class="btn-group ">
           <button
            type="button"
            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -94,9 +83,9 @@
           </ul>
           </div>
        </td>
-       <td> 
-          <div class="row">
-             <div class="col-sm-2 mx-3">
+       <td class="" colspan="1"> 
+          <div class="row ">
+             <div class="col-sm-2 mr-6 mx-3">
               <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
              </div>
              <div class="col-sm-4">

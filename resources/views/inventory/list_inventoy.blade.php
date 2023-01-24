@@ -37,9 +37,9 @@
 <div class="container">
  <table class="table  table-hover mt-5">
    <thead>
-     <tr>
+     <tr class="fs-6">
        <th>Product Name</th>
-       <th>Quantity in stock</th>
+       <th class="text-capitalize">Quantity in stock</th>
        <th id="th">Price</th>
        <th>Actions</th>
      </tr>
@@ -47,8 +47,8 @@
    <tbody>
      @foreach ($products as $product)
 
-     <tr>
-       <td>{{ $product->name }}</td>
+     <tr class="fs-6">
+       <td class="text-capitalize ">{{ $product->name }}</td>
        <td >{{ $product->quantity_in_stock }}</td>
        <td>{{ $product->price_per_unit }}</td>
    

@@ -52,7 +52,7 @@
                                     <tbody>
                                         <tr id="product0">
                                             <td>
-                                                <select name="products[]" class="form-control" onchange="getValue({{ $products }})">
+                                                <select name="products[]" class="form-control" onchange="getValue({{ $products }})" id="products">
                                                     <option value="">-- choose product --</option>
                                                     @foreach ($products as $product)
                                                         <option value="{{ $product->id }}">
@@ -62,7 +62,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="number" name="quantities[]" class="form-control"   />
+                                                <input type="number" name="quantities[]" class="form-control"   id="quantity"/>
                                             </td>
                                             <td>
 
@@ -107,16 +107,14 @@
 </div>
 <script>
     function getValue(x){
-
         var dop = document.getElementById("products");
-        console.log(dop)
         for (let index = 0; index < x.length; index++) {
             const element = x[index]['id'];
-            if (element == dop) {
+            if (element == dop.value) {
                 alert(x[index]['price_per_unit'])
-                document.getElementById("hidden").value = x[index]['price_per_unit'];
+                // document.getElementById("hidden").value = x[index]['price_per_unit'];
                 document.getElementById("price").value = x[index]['price_per_unit'];
-                document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
+                // document.getElementById("quantity").value = x[index]['quantity_in_stock'];
 
                 var stock = x[index]['quantity_in_stock'];
                 let p = document.getElementById('praragraph');
