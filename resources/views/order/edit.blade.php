@@ -1,15 +1,7 @@
 @extends('layouts.app')
-
+<x-navbar :username="auth()->user()->name" :back="true" :order="false"/>
 @section('content')
-<div class="row">
-    <div class="col-md-4 mt-5">
-        <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
-          <i class="fas fa-arrow-left"></i>
-            Back 
-          </a>
-    </div>
-    <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-  </div>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
