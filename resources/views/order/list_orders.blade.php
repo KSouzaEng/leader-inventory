@@ -51,52 +51,52 @@
         <td>
           <p class="fw-normal mb-1"> {{ $order->customer_email ?? '' }}</p>
         </td>
-       @if($order->status == 'OPEN')
-       <td id="td" class="">
-        <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success d-inline">{{ $order->status }}</span></h6>
-        </td>
-        @endif
-        @if($order->status == 'PROGRESS')
-        <td  >
-          <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning d-inline" >{{ $order->status }}</span></h6>
-        </td>
-        @endif
-        @if($order->status == 'CLOSED')
-        <td  >
-        <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger d-inline" >{{ $order->status }}</span></h6>
-       </td>
-        @endif
-       <td class="d-flex justify-content-center ">
-        <div class="btn-group ">
-          <button
-           type="button"
-           class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-           data-mdb-toggle="dropdown"
-           aria-expanded="false"
-          >
-           <span class="visually-hidden">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu">
-           <li><a class="dropdown-item"  href="order/update/{{ $order->id }}/OPEN">OPEN</a></li>
-           <li><a class="dropdown-item" href="order/update/{{ $order->id }}/PROGRESS">PROGRESS</a></li>
-           <li><a class="dropdown-item" href="order/update/{{ $order->id }}/CLOSED">CLOSED</a></li>
-          </ul>
-          </div>
-       </td>
-       <td class="" > 
-          <div class="row d-flex">
-             <div class="col-sm-2 mr-6 mx-3">
-              <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
-             </div>
-             <div class="col-sm-4">
-              <form action="/delete/{{ $order->id }}" method="post" >
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
-                </form>
-             </div>
-           </div>
+        @if($order->status == 'OPEN')
+        <td id="td">
+         <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
          </td>
+         @endif
+         @if($order->status == 'PROGRESS')
+         <td>
+           <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning" >{{ $order->status }}</span></h6>
+         </td>
+         @endif
+         @if($order->status == 'CLOSED')
+         <td>
+         <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger" >{{ $order->status }}</span></h6>
+        </td>
+         @endif
+        <td>
+         <div class="d-flex justify-content-center ">
+           <button
+            type="button"
+            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+           >
+            <span class="visually-hidden">Toggle Dropdown</span>
+           </button>
+           <ul class="dropdown-menu">
+            <li><a class="dropdown-item"  href="order/update/{{ $order->id }}/OPEN">OPEN</a></li>
+            <li><a class="dropdown-item" href="order/update/{{ $order->id }}/PROGRESS">PROGRESS</a></li>
+            <li><a class="dropdown-item" href="order/update/{{ $order->id }}/CLOSED">CLOSED</a></li>
+           </ul>
+           </div>
+        </td>
+        <td> 
+           <div class="row">
+              <div class="col-sm-2 mx-3">
+               <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
+              </div>
+              <div class="col-sm-4">
+               <form action="/delete/{{ $order->id }}" method="post" >
+                 @csrf
+                 @method('DELETE')
+                 <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
+                 </form>
+              </div>
+            </div>
+          </td>
      </tr>
      @endforeach
    </tbody>
