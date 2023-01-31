@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title','Create Order')
 
-
+<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="true"/>
 @section('content')  
- <x-navbar :username="auth()->user()->name"/>
+
 
 @if(session('success'))
 <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
@@ -24,7 +24,7 @@
 </div>
 @endif
 <div class="container">
- <table class="table align-middle mb-0 bg-whitetable-hover mt-5 ">
+ <table class="table align-middle mb-0 bg-white table-hover mt-5 ">
    <thead class="bg-light">
      <tr class="fs-6">
         <th>Details</th>
@@ -52,17 +52,17 @@
           <p class="fw-normal mb-1"> {{ $order->customer_email ?? '' }}</p>
         </td>
        @if($order->status == 'OPEN')
-       <td id="td" class="mx-2" colspan="1">
+       <td id="td" class="">
         <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success d-inline">{{ $order->status }}</span></h6>
         </td>
         @endif
         @if($order->status == 'PROGRESS')
-        <td  colspan="1">
+        <td  >
           <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning d-inline" >{{ $order->status }}</span></h6>
         </td>
         @endif
         @if($order->status == 'CLOSED')
-        <td  colspan="1">
+        <td  >
         <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger d-inline" >{{ $order->status }}</span></h6>
        </td>
         @endif
@@ -83,8 +83,8 @@
           </ul>
           </div>
        </td>
-       <td class="" colspan="1"> 
-          <div class="row ">
+       <td class="" > 
+          <div class="row d-flex">
              <div class="col-sm-2 mr-6 mx-3">
               <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
              </div>
@@ -103,7 +103,7 @@
  </table>
 </div>
 {{-- Pagination --}}
-<div class="d-flex justify-content-center">
+<div class="-flex justify-content-center mt-3 pagination pagination-circle">
   {!! $orders->links() !!}
 </div>
 </div>

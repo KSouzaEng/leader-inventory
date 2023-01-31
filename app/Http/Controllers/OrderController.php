@@ -14,7 +14,7 @@ class OrderController extends Controller
 
       public function index(){
 
-        $orders = Order::with('products')->paginate(2);
+        $orders = Order::orderBy('id', 'DESC')->with('products')->paginate(5);
         // dd($orders);
 
         return view('order.list_orders',compact('orders'));
@@ -28,17 +28,6 @@ class OrderController extends Controller
         return view('order.create_order',compact('products'));
     }
     public function create(Request $request){
-      // dd($request->all());
-
-
-      // $total = $request->price * $request->quantity_product_order;
-
-      // $quantityInStock = Product::where('id',$request->product_id)->first();
-      // $error = 'No product in stock';
-
-      // if ($quantityInStock->quantity_in_stock < $request->quantity_product_order || $quantityInStock->quantity_in_stock == 0 ) {
-      //   return redirect('/form-order')->with('error',$error);
-      // }
         
     $order = Order::create($request->all());
 

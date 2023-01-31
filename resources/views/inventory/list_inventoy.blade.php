@@ -2,18 +2,10 @@
 @extends('layouts.app')
 @section('title','List Inventory')
 
-
-@section('content')
-<div class="row">
-  <div class="col-md-4 mt-5">
-    <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded mx-1">
-      <i class="fas fa-arrow-left"></i>
-        Back 
-      </a>
-  </div>
   
-  <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-</div>
+<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="true"/>
+@section('content')
+
   
 @if(session('success'))
 <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
@@ -35,7 +27,7 @@
 </div>
 @endif
 <div class="container">
- <table class="table  table-hover mt-5">
+ <table class="table align-middle mb-0 bg-white table-hover mt-5">
    <thead>
      <tr class="fs-6">
        <th>Product Name</th>

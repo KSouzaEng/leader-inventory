@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title','Create Product')
-
+<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="false"/>
 @section('content')
 
 
@@ -10,15 +10,6 @@
         </div>
         @endif
  
-<div class="row">
-    <div class="col-md-4 mt-5">
-      <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
-        <i class="fas fa-arrow-left"></i>
-          Back 
-        </a>
-    </div>
-    <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-</div>
 <div class="cotainer mt-5">
     
     <div class="row justify-content-center">

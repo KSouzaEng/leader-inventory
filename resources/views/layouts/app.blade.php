@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 @vite('resources/css/app.css')
 @vite('resources/js/app.js')
 
@@ -25,8 +26,8 @@ rel="stylesheet"
 
 <title>Inventory - @yield('title')</title>
 </head>
-    <body>
-        <div class="container">
+    <body style=" background: #f4f0f0;">
+        <div class="container ">
             @yield('content')
             @yield('footer')
         </div>

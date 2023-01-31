@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title','Create Order')
-
+<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="false"/>
 @section('content')
 
 @if(session('error'))
@@ -12,15 +12,9 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<div class="row">
-    <div class="col-md-4 mt-5">
-        <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
-            <i class="fas fa-arrow-left"></i>
-              Back 
-        </a>
-    </div>
-    <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-</div>
+
+   
+
 <div class="cotainer mt-5">
     
     <div class="row justify-content-center">
@@ -52,7 +46,7 @@
                                     <tbody>
                                         <tr id="product0">
                                             <td>
-                                                <select name="products[]" class="form-control" onchange="getValue({{ $products }})" id="products">
+                                                <select name="products[]" class="form-control" id="products">
                                                     <option value="">-- choose product --</option>
                                                     @foreach ($products as $product)
                                                         <option value="{{ $product->id }}">
@@ -106,41 +100,6 @@
     </div>
 </div>
 <script>
-    function getValue(x){
-        var dop = document.getElementById("products");
-        for (let index = 0; index < x.length; index++) {
-            const element = x[index]['id'];
-            if (element == dop.value) {
-                alert(x[index]['price_per_unit'])
-                // document.getElementById("hidden").value = x[index]['price_per_unit'];
-                document.getElementById("price").value = x[index]['price_per_unit'];
-                // document.getElementById("quantity").value = x[index]['quantity_in_stock'];
-
-                var stock = x[index]['quantity_in_stock'];
-                let p = document.getElementById('praragraph');
-                let p2 = document.getElementById('low');
-                console.log(stock);
-                if (stock == 0 ) {
-               
-                    p.removeAttribute("hidden");
-                }else if(stock <= 10){
-                    p2.removeAttribute("hidden");
-                }
-            }
-          
-        }
-
-    }
-    function Soma(){
-          var qtd =  document.getElementById("quantity_product_order").value;
-          var price =  document.getElementById("price").value;
-
-          var soma = qtd * price;
-        //   formatValue = new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(soma);
-          document.getElementById("total").value = soma;
-     
-          
-        }
     $(document).ready(function(){
     let row_number = 1;
     $("#add_row").click(function(e){
