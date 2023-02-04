@@ -34,6 +34,7 @@ Route::get('order/{id}',[OrderController::class, 'show'] )->name('order');
 Route::get('order/update/{id}/{status}',[OrderController::class, 'updateStatus'] );
 Route::delete('delete/{id}',[OrderController::class, 'destroy'] )->name('destroy');
 Route::put('order/{id}',[OrderController::class, 'update'] )->name('update');
+Route::get('order_list/{id}',[OrderController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('list-inventory',[InventoryController::class,'index'])->name('list-inventory');
 Route::get('form-inventory',[InventoryController::class,'formInventory'])->name('form-inventory');
@@ -41,6 +42,8 @@ Route::post('save-product',[InventoryController::class,'create'])->name('save-pr
 Route::get('product/{id}',[InventoryController::class, 'show'] )->name('product');
 Route::put('update/product/{id}',[InventoryController::class, 'update'] )->name('update');
 Route::delete('delete/product/{id}',[InventoryController::class, 'destroy'] )->name('destroy');
+
+
 
 Route::get('broadcast', function(){
     broadcast(new chanellPublico('New'));

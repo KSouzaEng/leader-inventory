@@ -64,7 +64,8 @@
                 </div>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-between" >
+                <a href="order_list/{{  $orderId  }}" class="btn btn-primary" target="_blank"  >Print  Order <i class="far fa-file-pdf"></i></a>
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
             </div>
         </div>

@@ -27,7 +27,7 @@
  <table class="table align-middle mb-0 bg-white table-hover mt-5 ">
    <thead class="bg-light">
      <tr class="fs-6">
-        <th>Details</th>
+      <th>Details</th>
        <th>Order Code</th>
        <th>Customer Name</th>
        <th>Customer E-mail</th>
@@ -123,7 +123,7 @@
     Echo.channel('order')
     .listen('NewOrder', (e) => {
         console.log(e.order['id']);
-        alert('New Order')
+        alert('Status Change')
         window.location.reload(true);
         // if (r == true){
         //   window.location.reload();

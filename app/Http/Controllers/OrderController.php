@@ -8,6 +8,9 @@ use App\Models\Order;
 use App\Events\EventNewOrder;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewOrder;
+use PDF;
+use Dompdf\Options;
+use Dompdf\Dompdf;
 
 class OrderController extends Controller
 {
@@ -153,6 +156,15 @@ class OrderController extends Controller
       $order->delete();
 
        return redirect('/list-order')->with('msg','Order deleted!!');
+   }
+
+   public function generatePdf($id){
+    $order = Order::where('id',$id)->with('products')->get();
+      return PDF::loadView('pdf.pdf_order_list', compact('order'))
+            ->setPaper('a4', 'portrait')
+            ->setWarnings(false)
+            ->save(public_path("storage/documents/pdf_order_list.pdf"))
+            ->stream();
    }
 
 }
