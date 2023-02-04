@@ -62,15 +62,15 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" name="quantities[]" class="form-control" value="{{ $item->pivot->quantity_product_order }}" />
+                                            <input type="text" name="quantities[]" class="form-control quantities" value="{{ $item->pivot->quantity_product_order }}" />
                                         </td>
                                         <td>
 
-                                            <input type="text" name="prices[]" class="form-control" id="price"   value="{{ $item->pivot->price }}"/>
+                                            <input type="text" name="prices[]" class="form-control prices" id="price"   value="{{ $item->pivot->price }}"/>
 
                                         </td>
                                         <td>
-                                            <input type="number" name="total[]" class="form-control" 
+                                            <input type="text" name="total[]" class="form-control total" 
                                             value="{{ $item->pivot->total }}"  id="quantities" />
                                         </td>
                                     </tr>
@@ -109,47 +109,55 @@
             </div>
         </div>
         <script>
-            function getValue(x) {
-                var dop = document.getElementById("product_id").value;
-                for (let index = 0; index < x.length; index++) {
-                    const element = x[index]['id'];
-                    if (element == dop) {
-                        document.getElementById("price").value = x[index]['price_per_unit'];
-                        document.getElementById("quantity_in_stock").value = x[index]['quantity_in_stock'];
+      
+      $(document).ready(function() {
+            let row_number = 1;
+            $("#add_row").click(function(e) {
+                e.preventDefault();
+                let new_row_number = row_number - 1;
+                $('#product' + row_number).html($('#product' + new_row_number).html()).find(
+                    'td:first-child');
+                $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
+                row_number++;
 
-                    }
+                $("table tbody tr input").on('input', function() {
+                let total = 0;
+                $("table tbody tr").each(function() {
+                    const price = +$(this).find(".quantities").val()
+                    const qty = +$(this).find(".prices").val()
+                    const val = price * qty
+                    total += val;
+                    $(this).find(".total").val(total)
+                    total = 0;
+
+                })
+            }).trigger("input")
+            });
+
+            $("#delete_row").click(function(e) {
+                e.preventDefault();
+                if (row_number > 1) {
+                    $("#product" + (row_number - 1)).html('');
+                    row_number--;
                 }
+            });
 
-            }
+            $("table tbody tr input").on('input', function() {
+                let total = 0;
+                $("table tbody tr").each(function() {
+                    const price = +$(this).find(".quantities").val()
+                    const qty = +$(this).find(".prices").val()
+                    const val = price * qty
+                    total += val;
+                    $(this).find(".total").val(total)
+                    total =0
 
-            function Soma(products) {
-                var qtd = document.getElementById("qtd").value;
-                var price = document.getElementById("price").value;
+                })
+              
+             
+            }).trigger("input")
 
-                var soma = qtd * price;
-                document.getElementById("total").value = soma;
-
-
-            }
-            $(document).ready(function() {
-                let row_number = 1;
-                $("#add_row").click(function(e) {
-                    e.preventDefault();
-                    let new_row_number = row_number - 1;
-                    $('#product' + row_number).html($('#product' + new_row_number).html()).find(
-                        'td:first-child');
-                    $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
-                    row_number++;
-                });
-
-                $("#delete_row").click(function(e) {
-                    e.preventDefault();
-                    if (row_number > 1) {
-                        $("#product" + (row_number - 1)).html('');
-                        row_number--;
-                    }
-                });
-            })
+        });
         </script>
     </div>
 @endsection
