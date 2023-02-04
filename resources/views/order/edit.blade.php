@@ -54,12 +54,11 @@
                                             <select name="products[]" class="form-control"
                                                 onchange="getValue({{ $products }})">
                                                 <option value="">-- choose product --</option>
-                                                @foreach ($products as $key => $product)
-                                                    <option value="{{ $product->id }}" @if ($product->id == old('products[]', $product->id))@endif>
-                                                        
-                                                        {{ $product->name }}
-                                                    </option>
-                                                @endforeach
+                                                @foreach ($products as $product)
+                                                <option value="{{ $product->id }}"
+                                                    @if (old('products.' . $loop->parent->index, optional($item)->id) == $product->id) selected @endif
+                                                >{{ $product->name }} </option>
+                                            @endforeach
                                             </select>
                                         </td>
                                         <td>

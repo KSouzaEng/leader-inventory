@@ -110,12 +110,15 @@ class OrderController extends Controller
           $test_value = $value->id;
           $ids = explode(',',$test_value);
 
-            $qtdStpck = $value->quantity_in_stock - $request->quantities[$key];
+            $qtdStpck = $value->quantity_in_stock - (int)$request->quantities[$key];
             array_push($qtds,$qtdStpck);
            
         }
+     
 
         foreach ($request->products as $key => $value) {
+        // $p =  Product::where('id',$request->products[$key])->get();
+      
           $product = Product::where('id',$request->products[$key])->update(['quantity_in_stock' => $qtds[$key]]);
          }
           
