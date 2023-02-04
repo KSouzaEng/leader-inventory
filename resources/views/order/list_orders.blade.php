@@ -23,10 +23,10 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<div class="container">
- <table class="table align-middle mb-0 bg-white table-hover mt-5 ">
+<div class="container" id="datatable">
+ <table class="table align-middle mb-0 bg-white mt-5">
    <thead class="bg-light">
-     <tr class="fs-6">
+     <tr class="">
       <th>Details</th>
        <th>Order Code</th>
        <th>Customer Name</th>
@@ -46,24 +46,24 @@
         </td>
        <td><p class="fw-normal mb-1 text-center"> {{ $order->id ?? '' }}</p></td>
        <td class="text-capitalize">
-        <p class="fw-normal mb-1">{{ $order->customer_name ?? '' }}</p>
+        <p class="fw-normal mb-1  text-wrap text-break">{{ $order->customer_name ?? '' }}</p>
         </td>
         <td>
-          <p class="fw-normal mb-1"> {{ $order->customer_email ?? '' }}</p>
+          <p class="fw-normal mb-1 text-wrap text-break"> {{ $order->customer_email ?? '' }}</p>
         </td>
         @if($order->status == 'OPEN')
         <td id="td">
-         <h6 style="text-align: center;" class="col-xl-2"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
+         <h6 style="text-align: center;" class="d-flex d-flex justify-content-center"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
          </td>
          @endif
          @if($order->status == 'PROGRESS')
          <td>
-           <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-warning" >{{ $order->status }}</span></h6>
+           <h6 style="text-align: center;" class="d-flex  d-flex justify-content-center" id="no"><span class="badge bg-warning" >{{ $order->status }}</span></h6>
          </td>
          @endif
          @if($order->status == 'CLOSED')
          <td>
-         <h6 style="text-align: center;" class="col-xl-2" id="no"><span class="badge bg-danger" >{{ $order->status }}</span></h6>
+         <h6 style="text-align: center;" class="d-flex d-flex justify-content-center" id="no"><span class="badge bg-danger" >{{ $order->status }}</span></h6>
         </td>
          @endif
         <td>
@@ -83,28 +83,27 @@
            </ul>
            </div>
         </td>
-        <td> 
-           <div class="row">
-              <div class="col-sm-2 mx-3">
-               <a class="btn btn-warning btn-floating" type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
-              </div>
-              <div class="col-sm-4">
+        <td class="col-sm-9 col-md-6 col-lg-8"> 
+           {{-- <div class="d-grid gap-2 d-md-flex">
+              <div class="col-sm-2 me-md-2"> --}}
+               <a class="btn btn-warning btn-floating mb-1 " type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
+              {{-- </div>
+              <div class="col-sm-4"> --}}
                <form action="/delete/{{ $order->id }}" method="post" >
                  @csrf
                  @method('DELETE')
                  <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
                  </form>
-              </div>
-            </div>
+              {{-- </div>
+            </div> --}}
           </td>
      </tr>
      @endforeach
    </tbody>
  </table>
-</div>
-{{-- Pagination --}}
-<div class="-flex justify-content-center mt-3 pagination pagination-circle">
+ <div class="d-flex justify-content-center mt-3 pagination pagination-circle">
   {!! $orders->links() !!}
+</div>
 </div>
 </div>
 

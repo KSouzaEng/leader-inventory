@@ -26,12 +26,12 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<div class="container">
- <table class="table align-middle mb-0 bg-white table-hover mt-5">
+<div class="container" >
+ <table class="table align-middle mb-0 bg-white mt-5">
    <thead>
      <tr class="fs-6">
        <th>Product Name</th>
-       <th class="text-capitalize">Quantity in stock</th>
+       <th >Quantity in stock</th>
        <th id="th">Price</th>
        <th>Actions</th>
      </tr>
@@ -45,17 +45,17 @@
        <td>{{ $product->price_per_unit }}</td>
    
        <td> 
-        <div class="row">
-          <div class="col-sm-2">
-            <a class="btn btn-warning btn-floating" type="button" href="{{route('product',"$product->id")}}" data-mdb-toggle="tooltip" title="UPADATE"><i class="fas fa-edit"></i></a>
-           </div>
-           <div class="col-sm-4">
+        {{-- <div class="row">
+          <div class="col-sm-2"> --}}
+            <a class="btn btn-warning btn-floating mb-1" type="button" href="{{route('product',"$product->id")}}" data-mdb-toggle="tooltip" title="UPADATE"><i class="fas fa-edit"></i></a>
+           {{-- </div>
+           <div class="col-sm-4"> --}}
             <form action="/delete/product/{{ $product->id }}" method="post" >
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
               </form>
-         </div>
+         {{-- </div> --}}
          </td>
      </tr>
      @endforeach
