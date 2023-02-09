@@ -37,6 +37,8 @@
   type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
   ></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="icon" type="image/x-icon" href="{{ asset('/icons/favicon.ico') }}">
     <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
       <!-- Container wrapper -->
       <div class="container-fluid">

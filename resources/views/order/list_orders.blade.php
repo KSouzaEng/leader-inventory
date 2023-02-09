@@ -1,113 +1,114 @@
 @extends('layouts.app')
-@section('title','Create Order')
+@section('title', 'Create Order')
 
-<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="true"/>
-@section('content')  
+<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="true" />
+@section('content')
 
 
-@if(session('success'))
-<div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
-  <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
-  <div class="d-flex">
+    {{-- @if (session('success'))
+
    {{ session('success') }}
-  </div>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-@if(session('error'))
-<div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
-  <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
-  <div class="d-flex">
-   {{ session('error') }}
-  </div>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-<div class="container" id="datatable">
- <table class="table align-middle mb-0 bg-white mt-5">
-   <thead class="bg-light">
-     <tr class="">
-      <th>Details</th>
-       <th>Order Code</th>
-       <th>Customer Name</th>
-       <th>Customer E-mail</th>
-       <th>Status</th>
-       <th>Change Status</th>
-       <th >Actions</th>
-     </tr>
-   </thead>
-   <tbody>
-     @foreach ($orders as $key => $order)
-     <tr data-entry-id="{{ $order->id }}" class="fs-6">
-        <td class="" >
-            <a >
-                <x-modal :orderId="$order->id" :order="$order" />
-            </a>
-        </td>
-       <td><p class="fw-normal mb-1 text-center"> {{ $order->id ?? '' }}</p></td>
-       <td class="text-capitalize">
-        <p class="fw-normal mb-1  text-wrap text-break">{{ $order->customer_name ?? '' }}</p>
-        </td>
-        <td>
-          <p class="fw-normal mb-1 text-wrap text-break"> {{ $order->customer_email ?? '' }}</p>
-        </td>
-        @if($order->status == 'OPEN')
-        <td id="td">
-         <h6 style="text-align: center;" class="d-flex d-flex justify-content-center"  id="publico"><span class="badge badge-success">{{ $order->status }}</span></h6>
-         </td>
-         @endif
-         @if($order->status == 'PROGRESS')
-         <td>
-           <h6 style="text-align: center;" class="d-flex  d-flex justify-content-center" id="no"><span class="badge bg-warning" >{{ $order->status }}</span></h6>
-         </td>
-         @endif
-         @if($order->status == 'CLOSED')
-         <td>
-         <h6 style="text-align: center;" class="d-flex d-flex justify-content-center" id="no"><span class="badge bg-danger" >{{ $order->status }}</span></h6>
-        </td>
-         @endif
-        <td>
-         <div class="d-flex justify-content-center ">
-           <button
-            type="button"
-            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
-           >
-            <span class="visually-hidden">Toggle Dropdown</span>
-           </button>
-           <ul class="dropdown-menu">
-            <li><a class="dropdown-item"  href="order/update/{{ $order->id }}/OPEN">OPEN</a></li>
-            <li><a class="dropdown-item" href="order/update/{{ $order->id }}/PROGRESS">PROGRESS</a></li>
-            <li><a class="dropdown-item" href="order/update/{{ $order->id }}/CLOSED">CLOSED</a></li>
-           </ul>
-           </div>
-        </td>
-        <td class="col-sm-9 col-md-6 col-lg-8"> 
-           {{-- <div class="d-grid gap-2 d-md-flex">
+@endif --}}
+    @if (session('error'))
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle flex-shrink-0 me-2"></i>
+            <div class="d-flex">
+                {{ session('error') }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    <div class="container" id="datatable">
+        <table class="table align-middle mb-0 bg-white mt-5">
+            <thead class="bg-light">
+                <tr class="">
+                    <th>Details</th>
+                    <th>Order Code</th>
+                    <th>Customer Name</th>
+                    <th>Customer E-mail</th>
+                    <th>Status</th>
+                    <th>Change Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($orders as $key => $order)
+                    <tr data-entry-id="{{ $order->id }}" class="fs-6">
+                        <td class="">
+                            <a>
+                                <x-modal :orderId="$order->id" :order="$order" />
+                            </a>
+                        </td>
+                        <td>
+                            <p class="fw-normal mb-1 text-center"> {{ $order->id ?? '' }}</p>
+                        </td>
+                        <td class="text-capitalize">
+                            <p class="fw-normal mb-1  text-wrap text-break">{{ $order->customer_name ?? '' }}</p>
+                        </td>
+                        <td>
+                            <p class="fw-normal mb-1 text-wrap text-break"> {{ $order->customer_email ?? '' }}</p>
+                        </td>
+                        @if ($order->status == 'OPEN')
+                            <td id="td">
+                                <h6 style="text-align: center;" class="d-flex d-flex justify-content-center" id="publico">
+                                    <span class="badge badge-success">{{ $order->status }}</span></h6>
+                            </td>
+                        @endif
+                        @if ($order->status == 'PROGRESS')
+                            <td>
+                                <h6 style="text-align: center;" class="d-flex  d-flex justify-content-center"
+                                    id="no"><span class="badge bg-warning">{{ $order->status }}</span></h6>
+                            </td>
+                        @endif
+                        @if ($order->status == 'CLOSED')
+                            <td>
+                                <h6 style="text-align: center;" class="d-flex d-flex justify-content-center" id="no">
+                                    <span class="badge bg-danger">{{ $order->status }}</span></h6>
+                            </td>
+                        @endif
+                        <td>
+                            <div class="d-flex justify-content-center ">
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                    data-mdb-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="order/update/{{ $order->id }}/OPEN">OPEN</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="order/update/{{ $order->id }}/PROGRESS">PROGRESS</a></li>
+                                    <li><a class="dropdown-item" href="order/update/{{ $order->id }}/CLOSED">CLOSED</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="col-sm-9 col-md-6 col-lg-8">
+                            {{-- <div class="d-grid gap-2 d-md-flex">
               <div class="col-sm-2 me-md-2"> --}}
-               <a class="btn btn-warning btn-floating mb-1 " type="button" href="{{route('order',"$order->id")}}" data-mdb-toggle="tooltip" title="UPDATE"><i class="fas fa-exchange-alt"></i></a>
-              {{-- </div>
+                            <a class="btn btn-warning btn-floating mb-1 " type="button"
+                                href="{{ route('order', "$order->id") }}" data-mdb-toggle="tooltip" title="UPDATE"><i
+                                    class="fas fa-exchange-alt"></i></a>
+                            {{-- </div>
               <div class="col-sm-4"> --}}
-               <form action="/delete/{{ $order->id }}" method="post" >
-                 @csrf
-                 @method('DELETE')
-                 <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
-                 </form>
-              {{-- </div>
+                            <form action="/delete/{{ $order->id }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-floating" data-mdb-toggle="tooltip"
+                                    title="DELETE"><i class="fas fa-trash "></i></button>
+                            </form>
+                            {{-- </div>
             </div> --}}
-          </td>
-     </tr>
-     @endforeach
-   </tbody>
- </table>
- <div class="d-flex justify-content-center mt-3 pagination pagination-circle">
-  {!! $orders->links() !!}
-</div>
-</div>
-</div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center mt-3 pagination pagination-circle">
+            {!! $orders->links() !!}
+        </div>
+    </div>
+    </div>
 
-<script type="module">
+    <script type="module">
 
     var publico =  document.getElementById("publico");
     var td =  document.getElementById("no");
@@ -121,9 +122,18 @@
 
     Echo.channel('order')
     .listen('NewOrder', (e) => {
-        console.log(e.order['id']);
-        alert('Status Change')
-        window.location.reload(true);
+        // console.log(e.order['id']);
+    Swal.fire({
+        icon: 'success',
+        title: 'Order list Updated',
+        confirmButtonText: 'Close',
+        timer: 7000,
+      }).then((result) =>{
+        if (result.isConfirmed) {
+          window.location.reload(true);
+        }
+      })
+        // window.location.reload(true);
         // if (r == true){
         //   window.location.reload();
         // }

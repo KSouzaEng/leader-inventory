@@ -17,7 +17,7 @@ class OrderController extends Controller
 
       public function index(){
 
-        $orders = Order::orderBy('id', 'DESC')->with('products')->paginate(5);
+        $orders = Order::orderBy('id', 'DESC')->with('products')->paginate(10);
         // dd($orders);
 
         return view('order.list_orders',compact('orders'));
@@ -64,7 +64,7 @@ class OrderController extends Controller
         
         $orderFind = Order::find($order->id) ;
         broadcast(new NewOrder($orderFind));
-        return Redirect('/list-order')->with('success','Order saved');
+        return Redirect('/list-order')->with('success_save','Order saved');
       }else {
         return redirect('/list-order')->with('error','Erro');
       }

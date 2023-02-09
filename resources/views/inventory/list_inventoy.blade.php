@@ -30,6 +30,7 @@
  <table class="table align-middle mb-0 bg-white mt-5">
    <thead>
      <tr class="fs-6">
+      <th>Code</th>
        <th>Product Name</th>
        <th >Quantity in stock</th>
        <th id="th">Price</th>
@@ -40,6 +41,7 @@
      @foreach ($products as $product)
 
      <tr class="fs-6">
+      <td>{{ $product->id }}</td>
        <td class="text-capitalize ">{{ $product->name }}</td>
        <td >{{ $product->quantity_in_stock }}</td>
        <td>{{ $product->price_per_unit }}</td>

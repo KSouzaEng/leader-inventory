@@ -28,6 +28,7 @@ table {
   padding: 0;
   width: 100%;
   table-layout: fixed;
+  justify-content: center;
 }
 
 table caption {
@@ -38,7 +39,8 @@ table caption {
 table tr {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
-  padding: .3em;
+  padding: 2.2em;
+  width: 90%;
 }
 
 table th,

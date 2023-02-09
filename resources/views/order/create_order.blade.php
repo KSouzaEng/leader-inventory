@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Create Order')
+@php
+    $price = 0.0;
+    $id
+    
+@endphp
 <x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="false" />
 @section('content')
 
@@ -57,25 +62,33 @@
                                 <tbody>
                                     <tr id="product0">
                                         <td>
-                                            <select name="products[]" class="form-control" id="products">
+                                            <select name="products[]" class="form-control" id="products"
+                                                onchange="{{ $products }}">
                                                 <option value="">-- choose product --</option>
-                                                @foreach ($products as $product)
+                                                @foreach ($products as $key => $product)
+                                            
+                                                        
+                                                      {{   $price = $products }}
+                                                        
+                                                
                                                     <option value="{{ $product->id }}"
-                                                        @if ($product->quantity_in_stock < 20) @disabled(true) @endif>
-                                                        {{ $product->quantity_in_stock < 20 ? $product->name . ' ' . 'LOW STOCK' : $product->name }}
+                                                        @if ($product->quantity_in_stock == 0) @disabled(true) @endif>
+                                                        {{ $product->quantity_in_stock < 20 ? $product->name . '--' . 'LOW STOCK' : $product->name }}
 
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <p class="p" hidden>LOW STOCK</p>
                                         </td>
                                         <td>
                                             <input type="text" name="quantities[]" class="form-control quantities"
                                                 id="qtd" />
                                         </td>
                                         <td>
-
+                                            <input type="hidden" name="priceHiden" id="priceHiden" class="priceHiden"
+                                                value="{{ $price }}">
                                             <input type="text" name="prices[]" class="form-control prices"
-                                                id="price" />
+                                                id="price"  />
 
                                         </td>
                                         <td>
@@ -85,8 +98,16 @@
                                     </tr>
                                     <tr id="product1"></tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th id="total" colspan="3">Total :</th>
+                                        <td>
+                                            <input type="text" name="total_amount" class="form-control total_amount"
+                                                id="total_amount" />
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
-                            {{-- <input type="number" id="total_ht" readonly /> --}}
 
                             <div class="row ">
                                 <div class="col-md-12 ">
@@ -120,6 +141,8 @@
     <script>
         $(document).ready(function() {
             let row_number = 1;
+            let s = 0;
+
             $("#add_row").click(function(e) {
                 e.preventDefault();
                 let new_row_number = row_number - 1;
@@ -129,17 +152,24 @@
                 row_number++;
 
                 $("table tbody tr input").on('input', function() {
-                let total = 0;
-                $("table tbody tr").each(function() {
-                    const price = +$(this).find(".quantities").val()
-                    const qty = +$(this).find(".prices").val()
-                    const val = price * qty
-                    total += val;
-                    $(this).find(".total").val(total)
-                    total = 0;
+                    let total = 0;
+                    let soma = 0
+                    $("table tbody tr").each(function() {
+                        const price = +$(this).find(".quantities").val()
+                        const qty = +$(this).find(".prices").val()
+                        const val = price * qty
+                        total += val;
+                        soma += total;
+                        if (!isNaN(soma)) {
+                            console.log("SOMA:", soma)
+                            $(".total_amount").val(soma);
+                        }
+                        // console.log(this.value)
+                        $(this).find(".total").val(total)
+                        total = 0;
 
-                })
-            }).trigger("input")
+                    })
+                }).trigger("input")
             });
 
             $("#delete_row").click(function(e) {
@@ -150,20 +180,89 @@
                 }
             });
 
+
+
             $("table tbody tr input").on('input', function() {
                 let total = 0;
-                $("table tbody tr").each(function() {
-                    const price = +$(this).find(".quantities").val()
-                    const qty = +$(this).find(".prices").val()
+                let soma = 0;
+
+
+                $("table tbody tr ").each(function() {
+                    const price = +$(this).find(".prices").val()
+                    const qty = +$(this).find(".quantities").val()
                     const val = price * qty
                     total += val;
-                    $(this).find(".total").val(total)
-                    total =0
 
+
+                    soma += total;
+                    if (!isNaN(soma)) {
+                        console.log("SOMA:", soma)
+                        $(".total_amount").val(soma);
+                    }
+
+                    $(this).find(".total").val(total)
+                    total = 0
                 })
-              
-             
+
+
+
             }).trigger("input")
+
+            
+            // $("#products").change(function(e) {
+            //     var arr = $("#priceHiden").map(function() {
+            //         return this.value; // $(this).val()
+            //     }).get();
+            //     var products = JSON.parse(arr)
+
+
+            //             for (let i = 0; i < products.length; i++) {
+            //         const element = products[i];
+            //         console.log(element['id'])
+            //         if (element["id"] == this.value) {
+            //             console.log(element['price_per_unit'])
+            //             var price = element['price_per_unit']
+                     
+                       
+
+            //         }
+            //         }
+                        
+                
+
+                
+                            
+             
+                
+
+            // });
+
+            
+            $("table tbody tr input").on('input', function() {
+           
+
+                $("table tbody tr ").each(function(e) {
+                    var arr = $(".priceHiden").map(function() {
+                    return this.value; // $(this).val()
+                }).get();
+                var products = JSON.parse(arr)
+                // console.log(products)
+                    const price = +$(this).find(".prices").val()
+                  
+
+                    for (let i = 0; i < products.length; i++) {
+                         const element = products[i];
+                        //  console.log("Price",e)
+                         $("#products").change(function(e) {
+                            console.log(this.value)
+                         })
+                    }
+                })
+
+
+            }).trigger("input")
+
+
 
         });
     </script>
