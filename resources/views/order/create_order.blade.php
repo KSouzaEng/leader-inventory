@@ -63,7 +63,7 @@
                                     <tr id="product0">
                                         <td>
                                             <select name="products[]" class="form-control" id="products"
-                                                onchange="getValue(this,{{ $products }})">
+                                                >
                                                 <option value="">-- choose product --</option>
                                                 @foreach ($products as $key => $product)
                                                     {{ $price = $products }}
@@ -237,33 +237,33 @@
 
         });
 
-        function getValue(x, p) {
+        // function getValue(x, p) {
 
-            for (let index = 0; index < p.length; index++) {
-                const element = p[index]['id'];
-                // p[index]['price_per_unit'];
-                // console.log(p[index]['price_per_unit'])
+        //     for (let index = 0; index < p.length; index++) {
+        //         const element = p[index]['id'];
+        //         // p[index]['price_per_unit'];
+        //         // console.log(p[index]['price_per_unit'])
 
-                if (element == x.value) {
-                    var oTable = document.getElementById('products_table');
-                    var rowLength = oTable.rows.length;
-                    var spans = document.querySelector('.prices');
-                    var i;
-                    for (i = 0; i < spans.length; i++) {
-                        spans[i].style.backgroundColor = red;
-                    }
+        //         if (element == x.value) {
+        //             var oTable = document.getElementById('products_table');
+        //             var rowLength = oTable.rows.length;
+        //             var spans = document.querySelector('.prices');
+        //             var i;
+        //             for (i = 0; i < spans.length; i++) {
+        //                 spans[i].style.backgroundColor = red;
+        //             }
 
-                    // for (i = 0; i < rowLength; i++){
-                    //     var oCells = oTable.rows[i].cells;
-                    //     var cellLength = oCells.length;
-                    //     // console.log(cellLength)
-                    //     for(var j = 0; j < cellLength; j++){
-                    //         console.log(oCells[j].getElementsByTagName("input")[0]);
-                    //     }
+        //             // for (i = 0; i < rowLength; i++){
+        //             //     var oCells = oTable.rows[i].cells;
+        //             //     var cellLength = oCells.length;
+        //             //     // console.log(cellLength)
+        //             //     for(var j = 0; j < cellLength; j++){
+        //             //         console.log(oCells[j].getElementsByTagName("input")[0]);
+        //             //     }
 
-                    // }
-                }
-            }
-        }
+        //             // }
+        //         }
+        //     }
+        // }
     </script>
 @endsection
