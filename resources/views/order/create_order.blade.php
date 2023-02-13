@@ -2,7 +2,7 @@
 @section('title', 'Create Order')
 @php
     $price = 0.0;
-    $id
+    $id;
     
 @endphp
 <x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="false" />
@@ -63,14 +63,12 @@
                                     <tr id="product0">
                                         <td>
                                             <select name="products[]" class="form-control" id="products"
-                                                onchange="{{ $products }}">
+                                                onchange="getValue(this,{{ $products }})">
                                                 <option value="">-- choose product --</option>
                                                 @foreach ($products as $key => $product)
-                                            
-                                                        
-                                                      {{   $price = $products }}
-                                                        
-                                                
+                                                    {{ $price = $products }}
+
+
                                                     <option value="{{ $product->id }}"
                                                         @if ($product->quantity_in_stock == 0) @disabled(true) @endif>
                                                         {{ $product->quantity_in_stock < 20 ? $product->name . '--' . 'LOW STOCK' : $product->name }}
@@ -85,10 +83,10 @@
                                                 id="qtd" />
                                         </td>
                                         <td>
-                                            <input type="hidden" name="priceHiden" id="priceHiden" class="priceHiden"
-                                                value="{{ $price }}">
+                                            {{-- <input type="hidden" name="priceHiden" id="priceHiden" class="priceHiden"
+                                                value="{{ $price }}"> --}}
                                             <input type="text" name="prices[]" class="form-control prices"
-                                                id="price"  />
+                                                id="price" />
 
                                         </td>
                                         <td>
@@ -151,17 +149,19 @@
                 $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
                 row_number++;
 
+
+
                 $("table tbody tr input").on('input', function() {
                     let total = 0;
                     let soma = 0
                     $("table tbody tr").each(function() {
+
                         const price = +$(this).find(".quantities").val()
                         const qty = +$(this).find(".prices").val()
                         const val = price * qty
                         total += val;
                         soma += total;
                         if (!isNaN(soma)) {
-                            console.log("SOMA:", soma)
                             $(".total_amount").val(soma);
                         }
                         // console.log(this.value)
@@ -196,9 +196,9 @@
 
                     soma += total;
                     if (!isNaN(soma)) {
-                        console.log("SOMA:", soma)
                         $(".total_amount").val(soma);
                     }
+
 
                     $(this).find(".total").val(total)
                     total = 0
@@ -208,7 +208,7 @@
 
             }).trigger("input")
 
-            
+
             // $("#products").change(function(e) {
             //     var arr = $("#priceHiden").map(function() {
             //         return this.value; // $(this).val()
@@ -222,48 +222,48 @@
             //         if (element["id"] == this.value) {
             //             console.log(element['price_per_unit'])
             //             var price = element['price_per_unit']
-                     
-                       
+
+
 
             //         }
             //         }
-                        
-                
-
-                
-                            
-             
-                
 
             // });
 
-            
-            $("table tbody tr input").on('input', function() {
-           
-
-                $("table tbody tr ").each(function(e) {
-                    var arr = $(".priceHiden").map(function() {
-                    return this.value; // $(this).val()
-                }).get();
-                var products = JSON.parse(arr)
-                // console.log(products)
-                    const price = +$(this).find(".prices").val()
-                  
-
-                    for (let i = 0; i < products.length; i++) {
-                         const element = products[i];
-                        //  console.log("Price",e)
-                         $("#products").change(function(e) {
-                            console.log(this.value)
-                         })
-                    }
-                })
 
 
-            }).trigger("input")
 
 
 
         });
+
+        function getValue(x, p) {
+
+            for (let index = 0; index < p.length; index++) {
+                const element = p[index]['id'];
+                // p[index]['price_per_unit'];
+                // console.log(p[index]['price_per_unit'])
+
+                if (element == x.value) {
+                    var oTable = document.getElementById('products_table');
+                    var rowLength = oTable.rows.length;
+                    var spans = document.querySelector('.prices');
+                    var i;
+                    for (i = 0; i < spans.length; i++) {
+                        spans[i].style.backgroundColor = red;
+                    }
+
+                    // for (i = 0; i < rowLength; i++){
+                    //     var oCells = oTable.rows[i].cells;
+                    //     var cellLength = oCells.length;
+                    //     // console.log(cellLength)
+                    //     for(var j = 0; j < cellLength; j++){
+                    //         console.log(oCells[j].getElementsByTagName("input")[0]);
+                    //     }
+
+                    // }
+                }
+            }
+        }
     </script>
 @endsection

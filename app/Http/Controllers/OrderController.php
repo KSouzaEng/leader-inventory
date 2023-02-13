@@ -12,6 +12,7 @@ use PDF;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 
+
 class OrderController extends Controller
 {
 
@@ -31,6 +32,7 @@ class OrderController extends Controller
         return view('order.create_order',compact('products'));
     }
     public function create(Request $request){
+      // dd($request);
         
     $order = Order::create($request->all());
 
@@ -38,13 +40,15 @@ class OrderController extends Controller
     $quantities = $request->input('quantities', []);
     $prices = $request->input('prices', []);
     $total = $request->input('total', []);
+    $total_all =  $request->input('total_amount',[]);
     for ($product=0; $product < count($products); $product++) {
         if ($products[$product] != '') {
             $order->products()->attach($products[$product], 
             [
             'quantity_product_order' => $quantities[$product],
              'price' =>$prices[$product],
-             'total' =>$total[$product]
+             'total' =>$total[$product],
+             'total_all' =>$total_all
           ]);
     
         }
@@ -149,8 +153,7 @@ class OrderController extends Controller
     }
 
     public function destroy($id){
-
-      // Order::findOrFail($id)->delete();
+      alert()->question('Title','Lorem Lorem Lorem');
       $order = Order::find($id);
       $order->products()->detach();
       $order->delete();

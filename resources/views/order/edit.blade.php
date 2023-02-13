@@ -1,5 +1,6 @@
 @extends('layouts.app')
 <x-navbar :username="auth()->user()->name" :back="true" :order="false"/>
+@php $tota_all @endphp
 @section('content')
 
     <div class="container mt-5">
@@ -49,10 +50,13 @@
                                 </thead>
                                 <tbody>
                                     @foreach($order[0]->products as $item)
+                                    @php
+                                            $total_all = $item
+                                     @endphp
                                     <tr id="product0">
                                         <td>
                                             <select name="products[]" class="form-control"
-                                                onchange="getValue({{ $products }})">
+                                                id="product_select">
                                                 <option value="">-- choose product --</option>
                                                 @foreach ($products as $product)
                                                 <option value="{{ $product->id }}"
@@ -77,6 +81,15 @@
                                     @endforeach
                                     <tr id="product1"></tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th id="total" colspan="3">Total :</th>
+                                        <td>
+                                            <input type="text" name="total_amount" class="form-control total_amount"
+                                                id="total_amount" value="{{ $total_all }}"/>
+                                        </td> 
+                                    </tr>
+                                </tfoot>
                             </table>
 
                             <div class="row ">
@@ -109,29 +122,54 @@
             </div>
         </div>
         <script>
-      
-      $(document).ready(function() {
+                 $(document).ready(function() {
             let row_number = 1;
+            let s = 0;
+
             $("#add_row").click(function(e) {
                 e.preventDefault();
                 let new_row_number = row_number - 1;
                 $('#product' + row_number).html($('#product' + new_row_number).html()).find(
                     'td:first-child');
                 $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
+                console.log(  $('#product' + row_number).html($('#product' + new_row_number).html()).find(
+                    'td:first-child'))
                 row_number++;
-
+               
                 $("table tbody tr input").on('input', function() {
-                let total = 0;
-                $("table tbody tr").each(function() {
-                    const price = +$(this).find(".quantities").val()
-                    const qty = +$(this).find(".prices").val()
-                    const val = price * qty
-                    total += val;
-                    $(this).find(".total").val(total)
-                    total = 0;
+                    let total = 0;
+                    let soma = 0
+                    $("table tbody tr").each(function(index,e) {
+                        // console.log('INDEX',e)
+                        
+                    // if(index == row_number+1 && $(this).find('#product_select').val() != ""){
+                  
+                    //     $(this).find(".quantities").val("")
+                    //     $(this).find(".prices").val("")
+                    //     $(this).find(".total").val("")
+                    //     $(this).find('#product_select').val("");
+                    //     // if ($(this).find(".quantities").val("") == "") {
+                    //     //     row_number++;
+                    //     //     console.log("lk")
+                    //     // }
 
-                })
-            }).trigger("input")
+                    // }
+                   
+                        const price = +$(this).find(".quantities").val()
+                        const qty = +$(this).find(".prices").val()
+                        const val = price * qty
+                        total += val;
+                        soma += total;
+                        if (!isNaN(soma)) {
+                            // console.log("SOMA:", soma)
+                            $(".total_amount").val(soma);
+                        }
+                        // console.log(this.value)
+                        $(this).find(".total").val(total)
+                        total = 0;
+
+                    })
+                }).trigger("input")
             });
 
             $("#delete_row").click(function(e) {
@@ -142,20 +180,37 @@
                 }
             });
 
+
+
             $("table tbody tr input").on('input', function() {
                 let total = 0;
-                $("table tbody tr").each(function() {
-                    const price = +$(this).find(".quantities").val()
-                    const qty = +$(this).find(".prices").val()
+                let soma = 0;
+
+
+                $("table tbody tr ").each(function(index) {     
+
+                    const price = +$(this).find(".prices").val()
+                    const qty = +$(this).find(".quantities").val()
                     const val = price * qty
                     total += val;
-                    $(this).find(".total").val(total)
-                    total =0
 
+
+                    soma += total;
+                    if (!isNaN(soma)) {
+                        // console.log("SOMA:", soma)
+                        $(".total_amount").val(soma);
+                    }
+
+
+                    $(this).find(".total").val(total)
+                    total = 0
                 })
-              
-             
+
+
+
             }).trigger("input")
+
+
 
         });
         </script>

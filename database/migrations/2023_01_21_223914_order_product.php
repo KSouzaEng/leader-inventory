@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('quantity_product_order')->onDelete('cascade');
             $table->double('price',15,2)->nullable()->onDelete('cascade');
             $table->double('total',15,2)->nullable()->onDelete('cascade');
+            $table->double('total_all',15,2)->nullable()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
             

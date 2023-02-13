@@ -51,7 +51,8 @@
                         @if ($order->status == 'OPEN')
                             <td id="td">
                                 <h6 style="text-align: center;" class="d-flex d-flex justify-content-center" id="publico">
-                                    <span class="badge badge-success">{{ $order->status }}</span></h6>
+                                    <span class="badge badge-success">{{ $order->status }}</span>
+                                </h6>
                             </td>
                         @endif
                         @if ($order->status == 'PROGRESS')
@@ -63,7 +64,8 @@
                         @if ($order->status == 'CLOSED')
                             <td>
                                 <h6 style="text-align: center;" class="d-flex d-flex justify-content-center" id="no">
-                                    <span class="badge bg-danger">{{ $order->status }}</span></h6>
+                                    <span class="badge bg-danger">{{ $order->status }}</span>
+                                </h6>
                             </td>
                         @endif
                         <td>
@@ -89,7 +91,7 @@
                                     class="fas fa-exchange-alt"></i></a>
                             {{-- </div>
               <div class="col-sm-4"> --}}
-                            <form action="/delete/{{ $order->id }}" method="post">
+                            <form class="delete-form" data-route="{{ route('delete', $order->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-floating" data-mdb-toggle="tooltip"
@@ -140,6 +142,46 @@
         // td.hidden = true;
         // publico.innerHTML += "<h6>"+'<span class="badge badge-success">'+"New"+"</span>"+"</h6>"
         
+    });
+    $(document).ready(function() {
+        $('.delete-form').on('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                type: 'post',
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  url: $(this).data('route'),
+                  data: {
+                    '_method': 'delete',
+                    _token: '{{csrf_token()}}'
+                  },
+                  success: function (response, textStatus, xhr) {
+                    // alert(response)
+                    // window.location='/posts'
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                    window.location.reload(true);
+                  }
+                })
+                
+            }
+            })
+        });
     });
 
 </script>

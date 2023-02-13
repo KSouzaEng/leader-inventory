@@ -32,7 +32,7 @@ Route::get('form-order',[OrderController::class, 'formOrder'] )->name('form-orde
 Route::post('save-order',[OrderController::class, 'create'])->name('save');
 Route::get('order/{id}',[OrderController::class, 'show'] )->name('order');
 Route::get('order/update/{id}/{status}',[OrderController::class, 'updateStatus'] );
-Route::delete('delete/{id}',[OrderController::class, 'destroy'] )->name('destroy');
+Route::delete('delete/{id}',[OrderController::class, 'destroy'] )->name('delete');
 Route::put('order/{id}',[OrderController::class, 'update'] )->name('update');
 Route::get('order_list/{id}',[OrderController::class, 'generatePdf'])->name('generate-pdf');
 

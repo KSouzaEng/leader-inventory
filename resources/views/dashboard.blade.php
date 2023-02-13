@@ -38,8 +38,8 @@
   </div> --}}
   <div class="cotainer mt-5 py-2 ">
   <div class="row py-5 justify-content-center">
-    <div class="card d-flex" style="width: 30rem;height:42em">
-      <ul class="list-group list-group-light list-group-small ">
+    {{-- <div class="card d-flex" style="width: 30rem;height:42em"> --}}
+      <ul class="list-group list-group-light list-group-small " style="width: 60rem;height:42em">
         <a  href="{{ route('form-order') }}" class=" hover-overlay hover-zoom hover-shadow ripple mt-3">
         <li class="list-group-item px-3  fs-5 rounded-5 ">
        
@@ -77,7 +77,7 @@
       </a>
       </ul>
 
-    </div>
+
   </div>
   </div>
 
