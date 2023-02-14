@@ -65,7 +65,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item mt-1 p-2">
               @if ($back == true)
-              <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
+              <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded bg-primary bg-gradient  mx-1">
                 <i class="fas fa-arrow-left"></i>
                   Back 
                 </a>
@@ -75,7 +75,7 @@
             </li>
             <li class="nav-item mt-1 p-2">
               @if ($order == true)
-              <a href="{{ route('form-order') }}" class="btn btn-dark btn-rounded ">
+              <a href="{{ route('form-order') }}" class="btn btn-dark btn-rounded bg-success bg-gradient">
                 <i class="fas fa-plus"></i>
                 New Order
                 </a>

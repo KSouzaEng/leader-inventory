@@ -42,12 +42,12 @@
                             <div class="col-md-12 mb-3">
                                 <label for="customer_name" class="form-label ">Customer Name <span
                                         class="text-danger">*</span>:</label>
-                                <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                                <input type="text" class="form-control p-2" id="customer_name" name="customer_name" required>
                             </div>
                             <div class="col-md-12 mb-4">
                                 <label for="customer_email" class="form-label">Customer Email <span
                                         class="text-danger">*</span>:</label>
-                                <input type="email" class="form-control" id="customer_email" name="customer_email"
+                                <input type="email" class="form-control p-2" id="customer_email" name="customer_email"
                                     required>
                             </div>
                             <table class="table" id="products_table">
@@ -62,7 +62,7 @@
                                 <tbody>
                                     <tr id="product0">
                                         <td>
-                                            <select name="products[]" class="form-control" id="products"
+                                            <select name="products[]" class="form-control p-2" id="products"
                                                 >
                                                 <option value="">-- choose product --</option>
                                                 @foreach ($products as $key => $product)
@@ -79,18 +79,18 @@
                                             <p class="p" hidden>LOW STOCK</p>
                                         </td>
                                         <td>
-                                            <input type="text" name="quantities[]" class="form-control quantities"
+                                            <input type="text" name="quantities[]" class="form-control quantities p-2"
                                                 id="qtd" />
                                         </td>
                                         <td>
                                             {{-- <input type="hidden" name="priceHiden" id="priceHiden" class="priceHiden"
                                                 value="{{ $price }}"> --}}
-                                            <input type="text" name="prices[]" class="form-control prices"
+                                            <input type="text" name="prices[]" class="form-control prices p-2"
                                                 id="price" />
 
                                         </td>
                                         <td>
-                                            <input type="text" name="total[]" class="form-control total"
+                                            <input type="text" name="total[]" class="form-control total p-2"
                                                 id="total" />
                                         </td>
                                     </tr>
