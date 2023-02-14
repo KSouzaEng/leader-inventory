@@ -166,7 +166,6 @@ class OrderController extends Controller
       return PDF::loadView('pdf.pdf_order_list', compact('order'))
             ->setPaper('a4', 'portrait')
             ->setWarnings(false)
-            ->save(public_path("storage/documents/pdf_order_list.pdf"))
             ->stream();
    }
 
