@@ -2,7 +2,7 @@
 <a type="button" class="text-dark d-flex justify-content-center" data-mdb-toggle="modal" data-mdb-target="#exampleModal{{ $orderId }}">
     <i class="fas fa-eye"></i>
 </a>
-
+@php $tota_all @endphp
 <!-- Modal -->
 <div class="modal fade" id="exampleModal{{ $orderId }}" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -37,6 +37,9 @@
                             <tbody>     
                                 
                                 @foreach($order->products as $item)
+                                @php
+                                         $total_all = $item->pivot->total_all
+                                @endphp
 
                                 <tr>
                                     <td>
@@ -54,6 +57,15 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th id="total" colspan="3">Total :</th>
+                                    <td>
+                                        <input type="text" name="total_amount" class="form-control total_amount"
+                                            id="total_amount" value="{{ $total_all }}"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                        
                     </div>
@@ -64,7 +76,8 @@
                 </div>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-between" >
+                <a href="order_list/{{  $orderId  }}" class="btn btn-primary" target="_blank"  >Print  Order <i class="far fa-file-pdf"></i></a>
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
             </div>
         </div>

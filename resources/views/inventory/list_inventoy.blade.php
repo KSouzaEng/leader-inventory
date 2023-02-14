@@ -2,18 +2,10 @@
 @extends('layouts.app')
 @section('title','List Inventory')
 
-
-@section('content')
-<div class="row">
-  <div class="col-md-4 mt-5">
-    <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded mx-1">
-      <i class="fas fa-arrow-left"></i>
-        Back 
-      </a>
-  </div>
   
-  <div class="col-md-4 offset-md-4">  <x-navbar :username="auth()->user()->name"/></div>
-</div>
+<x-navbar :username="auth()->user()->name" class="mb-5" :back="true" :order="true"/>
+@section('content')
+
   
 @if(session('success'))
 <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
@@ -34,12 +26,13 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<div class="container">
- <table class="table  table-hover mt-5">
+<div class="container" >
+ <table class="table align-middle mb-0 bg-white mt-5">
    <thead>
      <tr class="fs-6">
+      <th>Code</th>
        <th>Product Name</th>
-       <th class="text-capitalize">Quantity in stock</th>
+       <th >Quantity in stock</th>
        <th id="th">Price</th>
        <th>Actions</th>
      </tr>
@@ -48,22 +41,23 @@
      @foreach ($products as $product)
 
      <tr class="fs-6">
+      <td>{{ $product->id }}</td>
        <td class="text-capitalize ">{{ $product->name }}</td>
        <td >{{ $product->quantity_in_stock }}</td>
        <td>{{ $product->price_per_unit }}</td>
    
        <td> 
-        <div class="row">
-          <div class="col-sm-2">
-            <a class="btn btn-warning btn-floating" type="button" href="{{route('product',"$product->id")}}" data-mdb-toggle="tooltip" title="UPADATE"><i class="fas fa-edit"></i></a>
-           </div>
-           <div class="col-sm-4">
+        {{-- <div class="row">
+          <div class="col-sm-2"> --}}
+            <a class="btn btn-warning btn-floating mb-1" type="button" href="{{route('product',"$product->id")}}" data-mdb-toggle="tooltip" title="UPADATE"><i class="fas fa-edit"></i></a>
+           {{-- </div>
+           <div class="col-sm-4"> --}}
             <form action="/delete/product/{{ $product->id }}" method="post" >
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger btn-floating"  data-mdb-toggle="tooltip" title="DELETE"><i class="fas fa-trash "></i></button>
               </form>
-         </div>
+         {{-- </div> --}}
          </td>
      </tr>
      @endforeach

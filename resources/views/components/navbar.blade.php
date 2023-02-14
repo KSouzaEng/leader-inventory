@@ -1,9 +1,9 @@
 {{-- <header>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
   <script
   type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
   ></script>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <div class="container">
   <div class=" clearfix mt-5 ">
 
@@ -28,80 +28,97 @@
    </div>
   </div>
 </div>
-</header> --}}
+</header>  --}}
 <!-- Navbar -->
-<div class="container-fluid">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex">
-    <!-- Container wrapper -->
-    <div class="container-fluid">
-      <!-- Toggle button -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-  
-      <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Navbar brand -->
-        <a class="navbar-brand mt-2 mt-lg-0" href="#">
-       
-        </a>
-        <!-- Left links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item mt-1 p-2">
-            <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded  mx-1">
-              <i class="fas fa-arrow-left"></i>
-                Back 
-              </a>
-          </li>
-          <li class="nav-item mt-1 p-2">
-            <a href="{{ route('form-order') }}" class="btn btn-dark btn-rounded ">
-              <i class="fas fa-plus"></i>
-              New Order
-              </a>
-          </li>
-          
-        </ul>
-        <!-- Left links -->
-      </div>
-      <!-- Collapsible wrapper -->
-  
-      <!-- Right elements -->
-      <div class="d-flex align-items-center">
-      
-        <!-- Avatar -->
-        <div class="dropdown">
+<header>
+  {{-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> --}}
+  <script src="{{ asset('jquery.js') }}"></script>
+  <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+  ></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="icon" type="image/x-icon" href="{{ asset('/icons/favicon.ico') }}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+    
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar brand -->
+          <a class="navbar-brand mt-2 mt-lg-0" href="#">
          
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuAvatar"
-          >
-            <li>
-              <a class="dropdown-item" href="{{ route('dashboard') }}">Back</a>
+          </a>
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item mt-1 p-2">
+              @if ($back == true)
+              <a href="{{ route('dashboard') }}" class="btn btn-dark btn-rounded bg-primary bg-gradient  mx-1">
+                <i class="fas fa-arrow-left"></i>
+                  Back 
+                </a>
+              @endif
+            
+            
             </li>
-            <li>
-              <a class="dropdown-item" href="">Settings</a>
+            <li class="nav-item mt-1 p-2">
+              @if ($order == true)
+              <a href="{{ route('form-order') }}" class="btn btn-dark btn-rounded bg-success bg-gradient">
+                <i class="fas fa-plus"></i>
+                New Order
+                </a>
+              @endif
+           
             </li>
-            {{-- <li>
-              <a class="dropdown-item" href="#">Logout</a>
-            </li> --}}
+            
           </ul>
+          <!-- Left links -->
         </div>
-        <a class="text-reset me-3 fs-6" href="{{ route('signout') }}">
-          <i class="fas fa-sign-out-alt"></i>
-          Logout
-        </a>
+        <!-- Collapsible wrapper -->
+    
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+        
+          <!-- Avatar -->
+          <div class="dropdown">
+           
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuAvatar"
+            >
+              <li>
+                <a class="dropdown-item" href="{{ route('dashboard') }}">Back</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="">{{ $username }}</a>
+              </li>
+               <li>
+                <a class="dropdown-item" href="#">Logout</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mx-3">{{ $username }}</div>
+          <a class="text-reset me-3 fs-6" href="{{ route('signout') }}">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </div>
+        <!-- Right elements -->
       </div>
-      <!-- Right elements -->
-    </div>
-    <!-- Container wrapper -->
-  </nav>
-</div>
+      <!-- Container wrapper -->
+    </nav>
+</header>
+ 
 <!-- Navbar -->

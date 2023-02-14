@@ -8,13 +8,17 @@ use App\Models\Order;
 use App\Events\EventNewOrder;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewOrder;
+use PDF;
+use Dompdf\Options;
+use Dompdf\Dompdf;
+
 
 class OrderController extends Controller
 {
 
       public function index(){
 
-        $orders = Order::with('products')->paginate(2);
+        $orders = Order::orderBy('id', 'DESC')->with('products')->paginate(10);
         // dd($orders);
 
         return view('order.list_orders',compact('orders'));
@@ -28,17 +32,7 @@ class OrderController extends Controller
         return view('order.create_order',compact('products'));
     }
     public function create(Request $request){
-      // dd($request->all());
-
-
-      // $total = $request->price * $request->quantity_product_order;
-
-      // $quantityInStock = Product::where('id',$request->product_id)->first();
-      // $error = 'No product in stock';
-
-      // if ($quantityInStock->quantity_in_stock < $request->quantity_product_order || $quantityInStock->quantity_in_stock == 0 ) {
-      //   return redirect('/form-order')->with('error',$error);
-      // }
+      // dd($request);
         
     $order = Order::create($request->all());
 
@@ -46,13 +40,15 @@ class OrderController extends Controller
     $quantities = $request->input('quantities', []);
     $prices = $request->input('prices', []);
     $total = $request->input('total', []);
+    $total_all =  $request->input('total_amount',[]);
     for ($product=0; $product < count($products); $product++) {
         if ($products[$product] != '') {
             $order->products()->attach($products[$product], 
             [
             'quantity_product_order' => $quantities[$product],
              'price' =>$prices[$product],
-             'total' =>$total[$product]
+             'total' =>$total[$product],
+             'total_all' =>$total_all
           ]);
     
         }
@@ -72,7 +68,7 @@ class OrderController extends Controller
         
         $orderFind = Order::find($order->id) ;
         broadcast(new NewOrder($orderFind));
-        return Redirect('/list-order')->with('success','Order saved');
+        return Redirect('/list-order')->with('success_save','Order saved');
       }else {
         return redirect('/list-order')->with('error','Erro');
       }
@@ -121,12 +117,15 @@ class OrderController extends Controller
           $test_value = $value->id;
           $ids = explode(',',$test_value);
 
-            $qtdStpck = $value->quantity_in_stock - $request->quantities[$key];
+            $qtdStpck = $value->quantity_in_stock - (int)$request->quantities[$key];
             array_push($qtds,$qtdStpck);
            
         }
+     
 
         foreach ($request->products as $key => $value) {
+        // $p =  Product::where('id',$request->products[$key])->get();
+      
           $product = Product::where('id',$request->products[$key])->update(['quantity_in_stock' => $qtds[$key]]);
          }
           
@@ -154,13 +153,20 @@ class OrderController extends Controller
     }
 
     public function destroy($id){
-
-      // Order::findOrFail($id)->delete();
+      alert()->question('Title','Lorem Lorem Lorem');
       $order = Order::find($id);
       $order->products()->detach();
       $order->delete();
 
        return redirect('/list-order')->with('msg','Order deleted!!');
+   }
+
+   public function generatePdf($id){
+    $order = Order::where('id',$id)->with('products')->get();
+      return PDF::loadView('pdf.pdf_order_list', compact('order'))
+            ->setPaper('a4', 'portrait')
+            ->setWarnings(false)
+            ->stream();
    }
 
 }

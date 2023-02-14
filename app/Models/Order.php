@@ -26,7 +26,7 @@ class Order extends Model
     {
         // return $this->hasMany(Product::class,'id','product_id');
         return $this->belongsToMany(Product::class)
-        ->withPivot(['quantity_product_order', 'price','total','deleted_at','created_at','updated_at'])->withTimestamps();
+        ->withPivot(['quantity_product_order', 'price','total','total_all','deleted_at','created_at','updated_at'])->withTimestamps();
     }
 
 }
