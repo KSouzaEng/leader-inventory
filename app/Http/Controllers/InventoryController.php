@@ -63,4 +63,11 @@ class InventoryController extends Controller
   
          return redirect('/list-inventory')->with('msg','Product deleted!!');
     }
+
+    public function getPrice($id){
+
+       $product = Product::where('id',$id)->get();
+
+        return response()->json($product);
+    }
 }

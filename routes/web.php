@@ -43,6 +43,8 @@ Route::get('product/{id}',[InventoryController::class, 'show'] )->name('product'
 Route::put('update/product/{id}',[InventoryController::class, 'update'] )->name('update');
 Route::delete('delete/product/{id}',[InventoryController::class, 'destroy'] )->name('destroy');
 
+Route::get('price/{id}',[InventoryController::class, 'getPrice'] )->name('price');
+
 
 
 Route::get('broadcast', function(){

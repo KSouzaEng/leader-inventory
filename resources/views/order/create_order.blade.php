@@ -42,12 +42,13 @@
                             <div class="col-md-12 mb-3">
                                 <label for="customer_name" class="form-label ">Customer Name <span
                                         class="text-danger">*</span>:</label>
-                                <input type="text" class="form-control p-2" id="customer_name" name="customer_name" required>
+                                <input type="text" class="form-control p-2" id="customer_name" name="customer_name"
+                                    required>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <label for="customer_email" class="form-label">Customer Email <span
+                                <label for="customer_email" class="form-label">Customer Phone <span
                                         class="text-danger">*</span>:</label>
-                                <input type="email" class="form-control p-2" id="customer_email" name="customer_email"
+                                <input type="tel" class="form-control p-2 customer_phone" id="customer_phone" name="customer_phone"
                                     required>
                             </div>
                             <table class="table" id="products_table">
@@ -62,8 +63,7 @@
                                 <tbody>
                                     <tr id="product0">
                                         <td>
-                                            <select name="products[]" class="form-control p-2" id="products"
-                                                >
+                                            <select name="products[]" class="form-control p-2 products" id="products">
                                                 <option value="">-- choose product --</option>
                                                 @foreach ($products as $key => $product)
                                                     {{ $price = $products }}
@@ -80,16 +80,17 @@
                                         </td>
                                         <td>
                                             <input type="text" name="quantities[]" class="form-control quantities p-2"
-                                                id="qtd" />
+                                                id="qtd" required/>
                                         </td>
-                                        <td>
+                                        <td class="preco">
                                             {{-- <input type="hidden" name="priceHiden" id="priceHiden" class="priceHiden"
                                                 value="{{ $price }}"> --}}
                                             <input type="text" name="prices[]" class="form-control prices p-2"
-                                                id="price" />
+                                                id="price" readonly/>
 
                                         </td>
                                         <td>
+
                                             <input type="text" name="total[]" class="form-control total p-2"
                                                 id="total" />
                                         </td>
@@ -136,13 +137,18 @@
             </div>
         </div>
     </div>
+    
     <script>
         $(document).ready(function() {
+            $('.customer_phone').mask('+# (000) 000-0000');
+            // $('.total').mask('+# (000) 000-0000');
             let row_number = 1;
             let s = 0;
 
+
+
             $("#add_row").click(function(e) {
-                e.preventDefault();
+               
                 let new_row_number = row_number - 1;
                 $('#product' + row_number).html($('#product' + new_row_number).html()).find(
                     'td:first-child');
@@ -155,6 +161,8 @@
                     let total = 0;
                     let soma = 0
                     $("table tbody tr").each(function() {
+                        e.preventDefault();
+                        changeValue()
 
                         const price = +$(this).find(".quantities").val()
                         const qty = +$(this).find(".prices").val()
@@ -182,10 +190,11 @@
 
 
 
-            $("table tbody tr input").on('input', function() {
+            $("table tbody tr input").on('input', function(e) {
                 let total = 0;
                 let soma = 0;
-
+                e.preventDefault();
+                changeValue()
 
                 $("table tbody tr ").each(function() {
                     const price = +$(this).find(".prices").val()
@@ -229,6 +238,41 @@
             //         }
 
             // });
+
+
+            function changeValue() {
+                $(".products").change(function() {
+
+
+                    var dop = $(this).val();
+                    $.ajax({
+                        type: 'get',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: 'price/' + dop,
+                        data: {
+                            '_method': 'get',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response, textStatus, xhr, e) {
+                            var id = response[0]['id']
+                            // console.log(response[0])
+
+                          
+                                $("#products_table tr").click(function() {
+                                    var value = $(this).find('td.preco').html();
+                                    $(this).find('#price').val(response[0]['price_per_unit'])
+                                    // filtroCoberturas.trigger('click');
+                                    console.log()
+                                })
+                            
+
+                        }
+                    })
+                })
+
+            }
 
 
 

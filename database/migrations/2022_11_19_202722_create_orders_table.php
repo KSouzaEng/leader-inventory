@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('customer_name');
-            $table->string('customer_email')->nullable();
+            $table->string('customer_phone')->nullable();
             $table->string('status')->default('OPEN');
             $table->softDeletes();
             $table->timestamps();

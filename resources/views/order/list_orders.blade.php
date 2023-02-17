@@ -21,14 +21,14 @@
     <div class="container" id="datatable">
         <table class="table align-middle mb-0 bg-white mt-5">
             <thead class="bg-light">
-                <tr class="">
-                    <th>Details</th>
-                    <th>Order Code</th>
-                    <th>Customer Name</th>
-                    <th>Customer E-mail</th>
-                    <th>Status</th>
-                    <th>Change Status</th>
-                    <th>Actions</th>
+                <tr >
+                    <th class="fw-bolder">Details</th>
+                    <th class="fw-bolder">Order Code</th>
+                    <th class="fw-bolder">Customer Name</th>
+                    <th class="fw-bolder">Customer E-mail</th>
+                    <th class="fw-bolder">Status</th>
+                    <th class="fw-bolder">Change Status</th>
+                    <th class="fw-bolder">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
                             <p class="fw-normal mb-1  text-wrap text-break">{{ $order->customer_name ?? '' }}</p>
                         </td>
                         <td>
-                            <p class="fw-normal mb-1 text-wrap text-break"> {{ $order->customer_email ?? '' }}</p>
+                            <p class="fw-normal mb-1 text-wrap text-break"> {{ $order->customer_phone ?? '' }}</p>
                         </td>
                         @if ($order->status == 'OPEN')
                             <td id="td">
