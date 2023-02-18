@@ -77,7 +77,7 @@
                             <div class="row ">
                                 <div class="col-md-12 ">
                                     <button id="add_row" class="btn btn-default pull-left">+ Add Row</button>
-                                    <button id='delete_row' class="pull-right btn btn-danger justify-content-end">- Delete
+                                    <button id='delete_row' class="pull-right btn btn-danger justify-content-end delete_row">- Delete
                                         Row</button>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                     e.preventDefault();
                     let new_row_number = row_number - 1;
                     $('#maintable tr:last').after(`
-                    <tr>
+                <tr id="edit">
                     <td>
                         <select name="products[]" class="form-control" id="product_select">
                             <option value="">-- choose product --</option>
@@ -162,10 +162,8 @@
 
                 $("#delete_row").click(function(e) {
                     e.preventDefault();
-                    if (row_number > 1) {
-                        $("#product" + (row_number - 1)).html('');
-                        row_number--;
-                    }
+                    $("#edit" ).remove();
+                    
                 });
 
 
