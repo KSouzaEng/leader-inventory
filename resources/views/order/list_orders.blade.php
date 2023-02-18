@@ -19,7 +19,7 @@
         </div>
     @endif
     <div class="container" id="datatable">
-        <table class="table align-middle mb-0 bg-white mt-5">
+        <table class="table align-middle mb-0 bg-white mt-5 rTable">
             <thead class="bg-light">
                 <tr >
                     <th class="fw-bolder">Details</th>
@@ -84,21 +84,21 @@
                             </div>
                         </td>
                         <td class="col-sm-9 col-md-6 col-lg-8">
-                            {{-- <div class="d-grid gap-2 d-md-flex">
-              <div class="col-sm-2 me-md-2"> --}}
-                            <a class="btn btn-warning btn-floating mb-1 " type="button"
+                            {{-- <div class="d-grid gap-5 d-md-flex"> --}}
+              {{-- <div class="col-sm-4 me-md-2"> --}}
+                            <a class="btn btn-warning btn-floating  mb-1 " type="button"
                                 href="{{ route('order', "$order->id") }}" data-mdb-toggle="tooltip" title="UPDATE"><i
                                     class="fas fa-exchange-alt"></i></a>
-                            {{-- </div>
-              <div class="col-sm-4"> --}}
+                            {{-- </div> --}}
+              {{-- <div class="col-sm-4"> --}}
                             <form class="delete-form" data-route="{{ route('delete', $order->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-floating" data-mdb-toggle="tooltip"
                                     title="DELETE"><i class="fas fa-trash "></i></button>
                             </form>
-                            {{-- </div>
-            </div> --}}
+                            {{-- </div> --}}
+            {{-- </div> --}}
                         </td>
                     </tr>
                 @endforeach

@@ -89,7 +89,7 @@ class OrderController extends Controller
 
       $order = Order::where('id',$id)->update([
         'customer_name' => $request->customer_name,
-        'customer_email' => $request->customer_email,
+        'customer_phone' => $request->customer_phone,
         'status' => $request->status,
       ]);
       $orderDetach = Order::find($id);
@@ -113,21 +113,29 @@ class OrderController extends Controller
 
       if ($order) {
         $qtds = [];
+        $qtdStpck = 0;
          foreach ($orderDB[0]->products as $key => $value) {
-          $test_value = $value->id;
-          $ids = explode(',',$test_value);
-
-            $qtdStpck = $value->quantity_in_stock - (int)$request->quantities[$key];
-            array_push($qtds,$qtdStpck);
+          $ids = $value->id;
+          // $ids = explode(',',$test_value); 
+          $p =  Product::where('id',$ids)->get();
+          
+            $qtdStpck = $p[0]->quantity_in_stock-(int)$request->quantities[$key];  
+            $p[0]->update(['quantity_in_stock' => $qtdStpck]);
+            $qtdStpck = 0;
+          
+          
            
         }
-     
+   
+        // dd($qtds);
 
-        foreach ($request->products as $key => $value) {
-        // $p =  Product::where('id',$request->products[$key])->get();
+        // foreach ($request->products as $key => $value) {
+ 
+   
+        // // $p =  Product::where('id',$request->products[$key])->get();
       
-          $product = Product::where('id',$request->products[$key])->update(['quantity_in_stock' => $qtds[$key]]);
-         }
+        //   $product = Product::where('id',$request->products[$key])->update(['quantity_in_stock' => $qtds[$key]]);
+        //  }
           
          return redirect('/list-order')->with('status','Order Updated Successfully');
        }else {

@@ -1,8 +1,7 @@
 @extends('layouts.app')
-<x-navbar :username="auth()->user()->name" :back="true" :order="false"/>
+<x-navbar :username="auth()->user()->name" :back="true" :order="false" />
 @php $tota_all @endphp
 @section('content')
-
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -14,7 +13,7 @@
                 <div class="card">
                     <div class="card-header text-center">
                         <h4>UPDATE ORDER
-                           
+
                         </h4>
                     </div>
                     <div class="card-body">
@@ -25,73 +24,56 @@
                             <div class="col-md-12 mb-3">
                                 <label for="customer_name" class="form-label ">Customer Name <span
                                         class="text-danger">*</span>:</label>
-                                <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ $order[0]->customer_name }}" required>
+                                <input type="text" class="form-control" id="customer_name" name="customer_name"
+                                    value="{{ $order[0]->customer_name }}" required>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <label for="customer_email" class="form-label">Customer Email <span
+                                <label for="customer_phone" class="form-label">Customer phone <span
                                         class="text-danger">*</span>:</label>
-                                <input type="email" class="form-control" id="customer_email" name="customer_email"
-                                value="{{ $order[0]->customer_email }}"   required>
+                                <input type="tel" class="form-control" id="customer_phone" name="customer_phone"
+                                    value="{{ $order[0]->customer_phone }}" required>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <label for="status" class="form-label">Status<span
-                                        class="text-danger">*</span>:</label>
+                                <label for="status" class="form-label">Status<span class="text-danger">*</span>:</label>
                                 <input type="text" class="form-control" id="status" name="status"
-                                value="{{ $order[0]->status }}"   required>
+                                    value="{{ $order[0]->status }}" required>
                             </div>
-                            <table class="table" id="products_table">
+                            <table class="table" id="maintable">
                                 <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total</th>
-                                    </tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
                                 </thead>
                                 <tbody>
-                                    @foreach($order[0]->products as $item)
-                                    @php
-                                            $total_all = $item
-                                     @endphp
-                                    <tr id="product0">
-                                        <td>
-                                            <select name="products[]" class="form-control"
-                                                id="product_select">
-                                                <option value="">-- choose product --</option>
-                                                @foreach ($products as $product)
-                                                <option value="{{ $product->id }}"
-                                                    @if (old('products.' . $loop->parent->index, optional($item)->id) == $product->id) selected @endif
-                                                >{{ $product->name }} </option>
-                                            @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="quantities[]" class="form-control quantities" value="{{ $item->pivot->quantity_product_order }}" />
-                                        </td>
-                                        <td>
-
-                                            <input type="text" name="prices[]" class="form-control prices" id="price"   value="{{ $item->pivot->price }}"/>
-
-                                        </td>
-                                        <td>
-                                            <input type="text" name="total[]" class="form-control total" 
-                                            value="{{ $item->pivot->total }}"  id="quantities" />
-                                        </td>
-                                    </tr>
+                                    @foreach ($order[0]->products as $item)
+                                        <tr>
+                                            <td>
+                                                <select name="products[]" class="form-control" id="product_select">
+                                                    <option value="">-- choose product --</option>
+                                                    @foreach ($products as $product)
+                                                        <option value="{{ $product->id }}"
+                                                            @if (old('products.' . $loop->parent->index, optional($item)->id) == $product->id) selected @endif>
+                                                            {{ $product->name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="quantities[]" class="form-control quantities"
+                                                    value="{{ $item->pivot->quantity_product_order }}" />
+                                            </td>
+                                            <td>
+                                                <input type="text" name="prices[]" class="form-control prices"
+                                                    id="price" value="{{ $item->pivot->price }}" />
+                                            </td>
+                                            <td>
+                                                <input type="text" name="total[]" class="form-control total"
+                                                    value="{{ $item->pivot->total }}" />
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                    <tr id="product1"></tr>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th id="total" colspan="3">Total :</th>
-                                        <td>
-                                            <input type="text" name="total_amount" class="form-control total_amount"
-                                                id="total_amount" value="{{ $total_all }}"/>
-                                        </td> 
-                                    </tr>
-                                </tfoot>
                             </table>
-
                             <div class="row ">
                                 <div class="col-md-12 ">
                                     <button id="add_row" class="btn btn-default pull-left">+ Add Row</button>
@@ -101,17 +83,7 @@
                             </div>
 
 
-                            {{-- <div class="col-12">
-                    <label for="quantity_in_stock" class="form-label">Product in stock :</label>
-                    <input type="text" class="form-control" id="quantity_in_stock"  @disabled(true) >
-                    <p hidden class="text-danger mt-1" id="praragraph">No product in stock</p>
-                    <p hidden class="text-danger mt-1" id="low">Low stock</p>
-                  </div>   --}}
-                            {{-- <div class="col-md-6">
-                    <label for="qtd" class="form-label">Total:</label>
-                    <input type="text" class="form-control" id="total" name="total" required>
-                </div>
-                 --}}
+
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-dark ">Save Order</button>
                             </div>
@@ -122,97 +94,113 @@
             </div>
         </div>
         <script>
-                 $(document).ready(function() {
-            let row_number = 1;
-            let s = 0;
+            $(document).ready(function() {
+                let row_number = 1;
+                let s = 0;
 
-            $("#add_row").click(function(e) {
-                e.preventDefault();
-                let new_row_number = row_number - 1;
-                $('#product' + row_number).html($('#product' + new_row_number).html()).find(
-                    'td:first-child');
-                $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
-                console.log(  $('#product' + row_number).html($('#product' + new_row_number).html()).find(
-                    'td:first-child'))
-                row_number++;
-               
+                $("#add_row").click(function(e) {
+                    e.preventDefault();
+                    let new_row_number = row_number - 1;
+                    $('#maintable tr:last').after(`
+                    <tr>
+                    <td>
+                        <select name="products[]" class="form-control" id="product_select">
+                            <option value="">-- choose product --</option>
+                                @foreach ($products as $key => $product)
+                                    <option value="{{ $product->id }}"
+                                        @if ($product->quantity_in_stock == 0) @disabled(true) @endif>
+                                        {{ $product->quantity_in_stock < 20 ? $product->name . '--' . 'LOW STOCK' : $product->name }}
+
+                                    </option>
+                                 @endforeach
+                        </select>
+                    </td>
+                    <td> <input type="text" name="quantities[]" class="form-control quantities"  /></td>
+                    <td> <input type="text" name="prices[]" class="form-control prices"  /></td>
+                    <td>    <input type="text" name="total[]" class="form-control total"/></td>
+                    </tr>
+                
+                    `);
+
+                    row_number++;
+
+                    $("table tbody tr input").on('input', function() {
+                        let total = 0;
+                        let soma = 0
+                        $("table tbody tr").each(function(index, e) {
+                            // console.log('INDEX',e)
+
+                            // if (index == row_number + 1) {
+
+                            //     $(this).find(".quantities").val("")
+                            //     $(this).find(".prices").val("")
+                            //     $(this).find(".total").val("")
+                            //     $(this).find('#product_select').val("");
+                            //     // if ($(this).find(".quantities").val("") == "") {
+                            //     //     row_number++;
+                            //     //     console.log("lk")
+                            //     // }
+
+                            // }
+
+                            const price = +$(this).find(".quantities").val()
+                            const qty = +$(this).find(".prices").val()
+                            const val = price * qty
+                            total += val;
+                            soma += total;
+                            if (!isNaN(soma)) {
+                                // console.log("SOMA:", soma)
+                                $(".total_amount").val(soma);
+                            }
+                            // console.log(this.value)
+                            $(this).find(".total").val(total)
+                            total = 0;
+
+                        })
+                    }).trigger("input")
+                });
+
+                $("#delete_row").click(function(e) {
+                    e.preventDefault();
+                    if (row_number > 1) {
+                        $("#product" + (row_number - 1)).html('');
+                        row_number--;
+                    }
+                });
+
+
+
                 $("table tbody tr input").on('input', function() {
                     let total = 0;
-                    let soma = 0
-                    $("table tbody tr").each(function(index,e) {
-                        // console.log('INDEX',e)
-                        
-                    // if(index == row_number+1 && $(this).find('#product_select').val() != ""){
-                  
-                    //     $(this).find(".quantities").val("")
-                    //     $(this).find(".prices").val("")
-                    //     $(this).find(".total").val("")
-                    //     $(this).find('#product_select').val("");
-                    //     // if ($(this).find(".quantities").val("") == "") {
-                    //     //     row_number++;
-                    //     //     console.log("lk")
-                    //     // }
+                    let soma = 0;
 
-                    // }
-                   
-                        const price = +$(this).find(".quantities").val()
-                        const qty = +$(this).find(".prices").val()
+
+                    $("table tbody tr ").each(function(index) {
+
+                        const price = +$(this).find(".prices").val()
+                        const qty = +$(this).find(".quantities").val()
                         const val = price * qty
                         total += val;
+
+
                         soma += total;
                         if (!isNaN(soma)) {
                             // console.log("SOMA:", soma)
                             $(".total_amount").val(soma);
                         }
-                        // console.log(this.value)
+
+
                         $(this).find(".total").val(total)
-                        total = 0;
-
+                        total = 0
                     })
+
+
+
                 }).trigger("input")
+
+
+
             });
-
-            $("#delete_row").click(function(e) {
-                e.preventDefault();
-                if (row_number > 1) {
-                    $("#product" + (row_number - 1)).html('');
-                    row_number--;
-                }
-            });
-
-
-
-            $("table tbody tr input").on('input', function() {
-                let total = 0;
-                let soma = 0;
-
-
-                $("table tbody tr ").each(function(index) {     
-
-                    const price = +$(this).find(".prices").val()
-                    const qty = +$(this).find(".quantities").val()
-                    const val = price * qty
-                    total += val;
-
-
-                    soma += total;
-                    if (!isNaN(soma)) {
-                        // console.log("SOMA:", soma)
-                        $(".total_amount").val(soma);
-                    }
-
-
-                    $(this).find(".total").val(total)
-                    total = 0
-                })
-
-
-
-            }).trigger("input")
-
-
-
-        });
         </script>
     </div>
 @endsection
