@@ -161,10 +161,10 @@ class OrderController extends Controller
     }
 
     public function destroy($id){
-      alert()->question('Title','Lorem Lorem Lorem');
       $order = Order::find($id);
-      $order->products()->detach();
       $order->delete();
+      $order->products()->detach();
+
 
        return redirect('/list-order')->with('msg','Order deleted!!');
    }
